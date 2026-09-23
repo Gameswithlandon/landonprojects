@@ -205,6 +205,75 @@
 
   .now { margin-top: 2.5rem; }
 
+  /* ---------- status checkmark ---------- */
+
+  .status-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .status-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .status-icon circle,
+  .status-icon path {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.2s ease;
+  }
+
+  .status-btn[data-status="up"] .status-icon circle,
+  .status-btn[data-status="up"] .status-icon path { stroke: #3fb660; }
+
+  .status-btn[data-status="down"] .status-icon circle,
+  .status-btn[data-status="down"] .status-icon path { stroke: #e5534b; }
+
+  .status-btn[data-status="late"] .status-icon circle,
+  .status-btn[data-status="late"] .status-icon path { stroke: #d9a441; }
+
+  .status-tip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    right: 0;
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    white-space: nowrap;
+    padding: 0.35rem 0.6rem;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(4px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .status-btn:hover .status-tip,
+  .status-btn:focus-visible .status-tip,
+  .status-btn.show-tip .status-tip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
   .section-heading {
     font-family: var(--mono);
     font-size: 0.9rem;
@@ -331,12 +400,26 @@
         <div class="project-name">tv-home-server</div>
         <div class="project-desc">ThinkPad T580 — i5-8350U, 8GB RAM, Ubuntu 24.04 LTS</div>
       </div>
+      <button class="status-btn" type="button" data-status="unknown" data-key="tv" aria-label="Status: checking">
+        <svg class="status-icon" viewBox="0 0 20 20" aria-hidden="true">
+          <circle cx="10" cy="10" r="9"></circle>
+          <path d="M6 10.5l2.5 2.5L14 7.5"></path>
+        </svg>
+        <span class="status-tip" role="tooltip">Checking…</span>
+      </button>
     </div>
     <div class="project-row">
       <div>
         <div class="project-name">gaming-home-server</div>
         <div class="project-desc">HP Pavilion Gaming Laptop — i5-8300H, GTX 1050, 32GB RAM, Ubuntu 24.04 LTS</div>
       </div>
+      <button class="status-btn" type="button" data-status="unknown" data-key="gaming" aria-label="Status: checking">
+        <svg class="status-icon" viewBox="0 0 20 20" aria-hidden="true">
+          <circle cx="10" cy="10" r="9"></circle>
+          <path d="M6 10.5l2.5 2.5L14 7.5"></path>
+        </svg>
+        <span class="status-tip" role="tooltip">Checking…</span>
+      </button>
     </div>
 
   <footer>
@@ -415,6 +498,41 @@
   function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
   render(reduceMotion);
+
+  async function loadStatus(key, url) {
+    const btn = document.querySelector('.status-btn[data-key="' + key + '"]');
+    const tip = btn.querySelector('.status-tip');
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error('bad response');
+      const data = await res.json();
+      const label = data.status === 'up' ? 'Up' : data.status === 'down' ? 'Down' : 'Late';
+      btn.dataset.status = data.status;
+      tip.textContent = label;
+      btn.setAttribute('aria-label', 'Status: ' + label);
+    } catch (err) {
+      btn.dataset.status = 'unknown';
+      tip.textContent = 'Status unavailable';
+      btn.setAttribute('aria-label', 'Status unavailable');
+    }
+  }
+
+  loadStatus('tv', 'https://healthchecks.io/b/2/485c571d-6160-4fbe-991f-352c698fd121.json');
+  loadStatus('gaming', 'https://healthchecks.io/b/2/1d405c80-7b74-495e-ab53-1682a0df8ab9.json');
+
+  document.querySelectorAll('.status-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const isOpen = btn.classList.contains('show-tip');
+      document.querySelectorAll('.status-btn.show-tip').forEach(function (b) { b.classList.remove('show-tip'); });
+      if (!isOpen) btn.classList.add('show-tip');
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.status-btn')) {
+      document.querySelectorAll('.status-btn.show-tip').forEach(function (b) { b.classList.remove('show-tip'); });
+    }
+  });
 </script>
 
 </body>
