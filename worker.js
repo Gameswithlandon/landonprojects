@@ -37,7 +37,8 @@ async function handleUptime(env) {
           fetch(`https://healthchecks.io/api/v3/checks/${c.uuid}/flips/?start=${start}`, { headers }),
         ]);
 
-        if (!checkRes.ok || !flipsRes.ok) throw new Error('upstream error');
+        if (!checkRes.ok) throw new Error('check fetch failed: ' + checkRes.status);
+        if (!flipsRes.ok) throw new Error('flips fetch failed: ' + flipsRes.status);
 
         const check = await checkRes.json();
         const flips = await flipsRes.json();
@@ -49,7 +50,7 @@ async function handleUptime(env) {
           uptime_30d: computeUptime(flips, start, now, check.status),
         };
       } catch (err) {
-        results[c.key] = { label: c.label, status: 'unknown', last_ping: null, uptime_30d: null };
+        results[c.key] = { label: c.label, status: 'unknown', last_ping: null, uptime_30d: null, debug: String(err && err.message || err) };
       }
     })
   );
