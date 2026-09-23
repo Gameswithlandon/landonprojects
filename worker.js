@@ -1,6 +1,6 @@
 const CHECKS = [
-  { key: 'tv', uuid: '485c571d-6160-4fbe-991f-352c698fd121', label: 'tv-home-server' },
-  { key: 'gaming', uuid: '1d405c80-7b74-495e-ab53-1682a0df8ab9', label: 'gaming-home-server' },
+  { key: 'tv', uuid: '2ed68968-3302-44ac-92a2-bbc9772bfd7b', label: 'tv-home-server' },
+  { key: 'gaming', uuid: 'cce31621-3da3-4507-acb1-0abac53458ca', label: 'gaming-home-server' },
 ];
 
 const WINDOW_SECONDS = 30 * 24 * 3600; // 30 days
