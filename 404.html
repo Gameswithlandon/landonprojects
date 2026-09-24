@@ -6,11 +6,13 @@
 <title>404 — Landon Projects</title>
 <meta name="theme-color" content="#0a0a0c">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0c'/%3E%3Ctext x='7' y='23' font-family='monospace' font-size='20' fill='%23ffb300'%3E%3E%3C/text%3E%3C/svg%3E">
+<!-- Cloudflare Web Analytics: paste the <script defer src="https://static.cloudflareinsights.com/..."> snippet here -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
+    --bg-raised: #111114;
     --border: #232326;
     --amber: #ffb300;
     --cyan: #5fc9d9;
@@ -18,30 +20,178 @@
     --muted: #85858c;
     --mono: 'JetBrains Mono', ui-monospace, monospace;
   }
+
   * { box-sizing: border-box; }
   html { color-scheme: dark; }
+
   body {
     margin: 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 1.5rem;
     background: radial-gradient(ellipse 120% 55% at 50% -10%, #141416 0%, #0a0a0c 45%, #060608 100%);
     color: var(--text);
     font-family: var(--mono);
+    -webkit-font-smoothing: antialiased;
   }
+
   a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid transparent; }
   a:hover, a:focus-visible { border-bottom-color: var(--cyan); }
-  .box { text-align: center; padding: 1.5rem; }
+  a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+  .page { width: 100%; max-width: 440px; }
+
+  .terminal {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    font-size: 0.95rem;
+  }
+
+  .terminal-bar {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.65rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .dot:hover { transform: scale(1.25); }
+
+  .dot--red { background: #e5534b; }
+  .dot--red:hover { box-shadow: 0 0 6px 1px rgba(229, 83, 75, 0.65); }
+
+  .dot--yellow { background: #d9a441; }
+  .dot--yellow:hover { box-shadow: 0 0 6px 1px rgba(217, 164, 65, 0.65); }
+
+  .dot--green { background: #3fb660; }
+  .dot--green:hover { box-shadow: 0 0 6px 1px rgba(63, 182, 96, 0.65); }
+
+  .terminal-body {
+    padding: 1.25rem 1.4rem 1.5rem;
+    min-height: 8rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
   .prompt { color: var(--amber); }
-  .out { color: var(--muted); margin: 0.6rem 0 1.4rem; }
+  .out { color: var(--text); }
+  .dim { color: var(--muted); }
+
+  .cursor {
+    display: inline-block;
+    width: 0.55em;
+    height: 1em;
+    background: var(--amber);
+    vertical-align: text-bottom;
+    animation: blink 1s steps(1) infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .home-link {
+    display: inline-block;
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cursor { animation: none; }
+    .dot:hover { transform: none; }
+  }
 </style>
 </head>
 <body>
-  <div class="box">
-    <div><span class="prompt">$</span> cat 404.txt</div>
-    <p class="out">nothing here — wrong path</p>
-    <a href="/">back to landon@projects</a>
+
+<div class="page">
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="dot dot--red"></span><span class="dot dot--yellow"></span><span class="dot dot--green"></span>
+    </div>
+    <div class="terminal-body" id="term" aria-hidden="true"></div>
   </div>
+  <a class="home-link" href="/">back to landon@projects</a>
+</div>
+
+<script>
+  const lines = [
+    { type: 'prompt', text: 'cd /this-page' },
+    { type: 'out',    text: 'bash: cd: /this-page: No such file or directory' },
+    { type: 'prompt', text: 'cat suggestion.txt' },
+    { type: 'out',    text: 'try landonprojects.com instead' },
+  ];
+
+  const term = document.getElementById('term');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function render(instant) {
+    term.innerHTML = '';
+    if (instant) {
+      lines.forEach(l => appendLine(l));
+      appendCursorLine();
+      return;
+    }
+    typeSequence();
+  }
+
+  function appendLine(l) {
+    const row = document.createElement('div');
+    if (l.type === 'prompt') {
+      row.innerHTML = '<span class="prompt">$</span> <span class="dim">' + l.text + '</span>';
+    } else {
+      row.innerHTML = '<span class="out">' + l.text + '</span>';
+    }
+    term.appendChild(row);
+  }
+
+  function appendCursorLine() {
+    const row = document.createElement('div');
+    row.innerHTML = '<span class="prompt">$</span> <span class="cursor"></span>';
+    term.appendChild(row);
+  }
+
+  async function typeSequence() {
+    for (const l of lines) {
+      const row = document.createElement('div');
+      term.appendChild(row);
+      if (l.type === 'prompt') {
+        row.innerHTML = '<span class="prompt">$</span> <span class="dim"></span>';
+        const target = row.querySelector('.dim');
+        await typeInto(target, l.text, 28);
+        await sleep(220);
+      } else {
+        row.innerHTML = '<span class="out"></span>';
+        const target = row.querySelector('.out');
+        await typeInto(target, l.text, 12);
+        await sleep(160);
+      }
+    }
+    appendCursorLine();
+  }
+
+  function typeInto(el, text, speed) {
+    return new Promise(resolve => {
+      let i = 0;
+      const id = setInterval(() => {
+        el.textContent = text.slice(0, ++i);
+        if (i >= text.length) { clearInterval(id); resolve(); }
+      }, speed);
+    });
+  }
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  render(reduceMotion);
+</script>
+
 </body>
 </html>
