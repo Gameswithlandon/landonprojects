@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Synapse</title>
+<meta name="description" content="Privacy policy for the Synapse Discord bot.">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0c'/%3E%3Ctext x='7' y='23' font-family='monospace' font-size='20' fill='%23ffb300'%3E%3E%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Lexend:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --bg-raised: #111114;
+    --border: #232326;
+    --amber: #ffb300;
+    --amber-dim: #b8830a;
+    --cyan: #5fc9d9;
+    --text: #e8e6e1;
+    --muted: #85858c;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --accent: 'Lexend', system-ui, sans-serif;
+    --sans: system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { color-scheme: dark; }
+
+  body {
+    margin: 0;
+    position: relative;
+    background: radial-gradient(ellipse 120% 55% at 50% -10%, #141416 0%, #0a0a0c 45%, #060608 100%);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid transparent; }
+  a:hover, a:focus-visible { border-bottom-color: var(--cyan); }
+  a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+  .topbar {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--amber);
+    border-bottom: none;
+  }
+
+  .brand:hover, .brand:focus-visible { border-bottom: none; opacity: 0.8; }
+
+  .topnav {
+    display: flex;
+    gap: 1.25rem;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  h1 {
+    font-family: var(--sans);
+    font-size: 1.85rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin: 0 0 0.4rem;
+  }
+
+  .updated {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 0 0 2.25rem;
+  }
+
+  .legal {
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .legal h2 {
+    font-family: var(--sans);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 2.25rem 0 0.7rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .legal p { margin: 0 0 1rem; max-width: 62ch; }
+  .legal ul { margin: 0 0 1rem; padding-left: 1.2rem; max-width: 62ch; }
+  .legal li { margin: 0.35rem 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    margin: 0 0 1rem;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 0.55rem 0.4rem;
+    border-top: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 500; }
+
+  footer {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+  }
+
+  .footer-item { color: var(--muted); }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 3rem 1.25rem 3rem; }
+    .topbar { padding: 1.25rem 1.25rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/terms">Synapse</a>
+  <nav class="topnav" aria-label="Legal">
+    <a href="/terms">Terms of Service</a>
+    <a href="/privacy" aria-current="page">Privacy Policy</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <h1>Privacy Policy</h1>
+  <p class="updated">Effective September 24, 2026</p>
+
+  <article class="legal">
+    <p>This policy describes how the hosted Synapse Discord bot handles information. Synapse is operated by Landon. It connects a public community server (a Spoke) to a private staff server (a Hub), or runs both roles in one Standalone server.</p>
+
+    <h2>1. How Synapse Accesses Discord</h2>
+    <p>Synapse operates strictly through slash commands, modals, and message components. It does not request or use Discord’s Message Content intent. It does not read, store, or scan the text of ordinary channel messages. The only content it receives is what you submit in a command, button, select menu, or modal, plus the Discord IDs Discord attaches to that interaction.</p>
+
+    <h2>2. Information We Store</h2>
+    <p>Operational data is stored in PostgreSQL. Discord snowflakes are stored as text, not as JavaScript numbers. Records can include:</p>
+    <ul>
+      <li>Server IDs, whether a server is a Hub, Spoke, or Standalone, the Hub link code, the triage channel ID, subscription tier, log channel ID, and AI smartness setting.</li>
+      <li>Hub-to-Spoke links, and pending Spoke link requests (requesting server, Hub, requesting user ID, and request time).</li>
+      <li>Staff role mappings: role ID, Hub ID, permission level, and flags for quotas, leave approval, and strikes.</li>
+      <li>Staff profiles: user ID, Hub ID, duty status, weekly quotas, and an optional shift start time.</li>
+      <li>Subscription end dates when a referral or Top.gg vote grant applies.</li>
+    </ul>
+    <p>We do not store message content, voice audio, or a full member list. Link codes are secrets for joining a Hub. Treat a leaked code as compromised and rotate it with the setup command.</p>
+
+    <h2>3. How We Use Information</h2>
+    <p>We use this data to route Spoke interactions to the correct Hub triage channel, to enforce Spoke limits and staff permission levels, to show staff lists, and to apply the subscription tier you are on. Future AI features, if enabled, would use command and ticket context you submit to the bot, not a scrape of channel history, and would be sent to Google’s Gemini API only for that request.</p>
+
+    <h2>4. Data Retention</h2>
+    <p>Configuration, links, staff roles, and staff profiles stay while the server uses Synapse, and are deleted or detached when setup is reset or a person is fired. Ticket and operational logs follow the retention window of the Hub’s tier:</p>
+    <table>
+      <thead>
+        <tr><th>Tier</th><th>Log retention</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Starter</td><td>7 days</td></tr>
+        <tr><td>Growth</td><td>30 days</td></tr>
+        <tr><td>Network</td><td>90 days</td></tr>
+        <tr><td>Enterprise</td><td>While the subscription is active (permanent for that term)</td></tr>
+        <tr><td>Bespoke</td><td>As agreed for that instance</td></tr>
+      </tbody>
+    </table>
+    <p>Pending link requests that are approved or denied are removed from the request table when the review finishes. Database backups, if taken for the host, follow the host’s backup cycle and are not a second public copy of your server.</p>
+
+    <h2>5. Third Parties</h2>
+    <ul>
+      <li>Discord, because the bot must call Discord’s API to post triage messages, assign roles, and answer commands.</li>
+      <li>Stripe, if you pay for Growth, Network, Enterprise, or Bespoke. Payment is handled off Discord through a Stripe payment link. We do not store full card numbers.</li>
+      <li>Top.gg, if your staff vote for the bot. Vote counts are used only to apply the published vote reward.</li>
+      <li>Google Gemini, only if an AI feature is turned on for your Hub and you invoke it. The smartness tier is a setting on the Hub, not a copy of your chat.</li>
+    </ul>
+    <p>We do not sell personal information. We do not use the data for advertising.</p>
+
+    <h2>6. Storage and Security</h2>
+    <p>The PostgreSQL database runs on infrastructure operated for the hosted bot. Access is limited to operating Synapse. Cross-server actions check the stored Hub-and-Spoke link before they run.</p>
+
+    <h2>7. Your Choices and Rights</h2>
+    <p>Server administrators can rotate a link code, change the log channel and smartness tier, remove a staff role mapping, fire a staff profile, or remove the bot. To ask for a lookup or deletion of the rows tied to your user ID or server ID, contact Discord user zerge5757 or open a request in the <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Synapse Support server</a>. We may need to keep a record where Discord, payment disputes, or abuse investigations require it.</p>
+    <p>Synapse is not directed at children under 13. Discord’s age rules still apply. Do not submit another person’s private information in a command unless your staff workflow requires that ID and you have a right to process it.</p>
+
+    <h2>8. Changes to This Policy</h2>
+    <p>We may update this policy by posting a new version here and changing the effective date. The current version is the one on this page. Use of the bot is also covered by the <a href="/terms">Terms of Service</a>.</p>
+
+    <h2>9. Contact</h2>
+    <p>Privacy questions and data requests may be directed to Discord user zerge5757 or raised in the <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Synapse Support server</a>. These are the only official contact channels.</p>
+  </article>
+
+  <footer>
+    <a href="/terms">Terms of Service</a>
+    <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Support Server</a>
+    <span class="footer-item">Discord: zerge5757</span>
+  </footer>
+</div>
+
+</body>
+</html>

@@ -21,6 +21,25 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    if (url.pathname === '/synapse' || url.pathname.startsWith('/synapse/')) {
+      return withSecurityHeaders(await notFound(request, env));
+    }
+
+    if (url.hostname === 'synapse.landonprojects.com') {
+      const synapsePage =
+        url.pathname === '/terms'
+          ? '/synapse/terms'
+          : url.pathname === '/privacy'
+            ? '/synapse/privacy'
+            : null;
+
+      if (synapsePage) {
+        const assetUrl = new URL(request.url);
+        assetUrl.pathname = synapsePage;
+        return withSecurityHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
+      }
+    }
+
     const response =
       url.pathname === '/api/uptime'
         ? await handleUptime(env)
@@ -29,6 +48,17 @@ export default {
     return withSecurityHeaders(response);
   },
 };
+
+async function notFound(request, env) {
+  const notFoundUrl = new URL(request.url);
+  notFoundUrl.pathname = '/404';
+  const page = await env.ASSETS.fetch(new Request(notFoundUrl, request));
+  return new Response(page.body, {
+    status: 404,
+    statusText: 'Not Found',
+    headers: page.headers,
+  });
+}
 
 function withSecurityHeaders(response) {
   const headers = new Headers(response.headers);

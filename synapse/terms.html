@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — Synapse</title>
+<meta name="description" content="Terms of Service for the Synapse Discord bot.">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0c'/%3E%3Ctext x='7' y='23' font-family='monospace' font-size='20' fill='%23ffb300'%3E%3E%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Lexend:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --bg-raised: #111114;
+    --border: #232326;
+    --amber: #ffb300;
+    --amber-dim: #b8830a;
+    --cyan: #5fc9d9;
+    --text: #e8e6e1;
+    --muted: #85858c;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --accent: 'Lexend', system-ui, sans-serif;
+    --sans: system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { color-scheme: dark; }
+
+  body {
+    margin: 0;
+    position: relative;
+    background: radial-gradient(ellipse 120% 55% at 50% -10%, #141416 0%, #0a0a0c 45%, #060608 100%);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid transparent; }
+  a:hover, a:focus-visible { border-bottom-color: var(--cyan); }
+  a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+  .topbar {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--amber);
+    border-bottom: none;
+  }
+
+  .brand:hover, .brand:focus-visible { border-bottom: none; opacity: 0.8; }
+
+  .topnav {
+    display: flex;
+    gap: 1.25rem;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  h1 {
+    font-family: var(--sans);
+    font-size: 1.85rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin: 0 0 0.4rem;
+  }
+
+  .updated {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 0 0 2.25rem;
+  }
+
+  .legal {
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .legal h2 {
+    font-family: var(--sans);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 2.25rem 0 0.7rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .legal p { margin: 0 0 1rem; max-width: 62ch; }
+  .legal ul { margin: 0 0 1rem; padding-left: 1.2rem; max-width: 62ch; }
+  .legal li { margin: 0.35rem 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    margin: 0 0 1rem;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 0.55rem 0.4rem;
+    border-top: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 500; }
+
+  footer {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+  }
+
+  .footer-item { color: var(--muted); }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 3rem 1.25rem 3rem; }
+    .topbar { padding: 1.25rem 1.25rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/terms">Synapse</a>
+  <nav class="topnav" aria-label="Legal">
+    <a href="/terms" aria-current="page">Terms of Service</a>
+    <a href="/privacy">Privacy Policy</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <h1>Terms of Service</h1>
+  <p class="updated">Effective September 24, 2026</p>
+
+  <article class="legal">
+    <p>These terms govern use of Synapse, the hosted Discord bot operated by Landon (“we”, “us”). By inviting Synapse, running its commands, or paying for a subscription, you agree to these terms and to Discord’s own Terms of Service and Community Guidelines. If you do not agree, remove the bot from your server.</p>
+
+    <h2>1. The Service</h2>
+    <p>Synapse is a hub-and-spoke staff bot. A public community server is a Spoke. A private staff server is a Hub. Standalone mode uses one server as both. Spoke traffic is routed to the Hub triage channel, and staff actions taken in the Hub are applied back in the Spoke. Hub administrators approve or deny Spoke link requests. A 6-character link code identifies the Hub. Rotating that code does not disconnect Spokes that are already linked.</p>
+    <p>Synapse runs only through slash commands, modals, and message components. It does not request or use Discord’s Message Content intent, and it does not read the text of ordinary chat messages.</p>
+
+    <h2>2. Eligibility</h2>
+    <p>You must be allowed to use Discord and to add bots to a server. Adding Synapse, approving a Spoke, or changing staff roles requires permission in that server, normally Administrator for setup and settings. You are responsible for the configuration you choose, including which channel receives triage and which roles count as staff.</p>
+
+    <h2>3. Acceptable Use</h2>
+    <p>You may not use Synapse to break Discord’s rules or the law, to harass people, to probe or disrupt the bot, or to share a Hub link code with servers you do not administer. Staff actions such as hire and fire must follow the permission levels configured on the Hub. We may refuse a link request, revoke a link, or remove the bot from a server that abuses the service.</p>
+
+    <h2>4. Subscriptions and Billing</h2>
+    <p>Paid plans are billed off Discord through a Stripe payment link. Discord’s in-app monetization is not used. Prices and limits for the hosted service are:</p>
+    <table>
+      <thead>
+        <tr><th>Tier</th><th>Price</th><th>Spokes</th><th>Tickets</th><th>Logs</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Starter</td><td>$0</td><td>1</td><td>5 concurrent</td><td>7 days</td></tr>
+        <tr><td>Growth</td><td>$5</td><td>2</td><td>25 concurrent</td><td>30 days</td></tr>
+        <tr><td>Network</td><td>$12</td><td>5</td><td>100 concurrent</td><td>90 days</td></tr>
+        <tr><td>Enterprise</td><td>$25–$30</td><td>Unlimited</td><td>Unlimited</td><td>Permanent</td></tr>
+        <tr><td>Bespoke</td><td>Custom</td><td>Isolated</td><td>Custom</td><td>Custom</td></tr>
+      </tbody>
+    </table>
+    <p>Spoke limits count external community servers only. A Standalone server’s link to itself does not use a Spoke slot. Growth may also be granted for a referral installation or a pooled Top.gg vote month, as described in the bot. Enterprise may include custom embed colors, CSV export, and a daily AI compute cap. Bespoke is a separate arrangement, not a self-serve checkout.</p>
+    <p>Subscriptions apply to the official hosted bot. The source is published under AGPL-3.0 for inspection. That publication is not a support agreement and not an offer to run your own production instance.</p>
+
+    <h2>5. Availability</h2>
+    <p>Synapse is provided as available. There is no uptime guarantee and no support SLA for the public tiers. Features described as planned, including AI summaries, may change or ship later. We may suspend the bot for maintenance, abuse, or Discord platform limits.</p>
+
+    <h2>6. Your Content and Our License</h2>
+    <p>You keep ownership of server configuration and staff records you submit through commands. You grant us a limited license to store and process that data only to operate Synapse, as described in the <a href="/privacy">Privacy Policy</a>. We do not claim ownership of your Discord messages. We do not receive message content.</p>
+
+    <h2>7. Termination</h2>
+    <p>You may remove Synapse from a server at any time. We may stop providing the bot to a server that violates these terms or Discord’s terms. Removing the bot does not by itself delete every database row immediately. Retention follows the privacy policy and the log window of the active tier.</p>
+
+    <h2>8. Disclaimers and Limitation of Liability</h2>
+    <p>Synapse is provided “as is.” We disclaim warranties of merchantability, fitness for a particular purpose, and non-infringement, to the extent the law allows. We are not responsible for moderation decisions your staff make with the bot, for Discord outages, or for loss of access when a role sits above the bot in the server role list.</p>
+    <p>To the extent the law allows, our total liability for a claim about Synapse is limited to the amount you paid us for the bot in the three months before the claim, or fifty US dollars if you paid nothing. We are not liable for indirect or consequential damages.</p>
+
+    <h2>9. Changes to These Terms</h2>
+    <p>We may update these terms by posting a new version on this page and changing the effective date. Continued use after that date is acceptance of the updated terms. If a change is material, we will also note it in the bot’s documentation command when practical.</p>
+
+    <h2>10. Contact</h2>
+    <p>Questions about these Terms may be directed to Discord user zerge5757 or raised in the <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Synapse Support server</a>. These are the only official contact channels.</p>
+  </article>
+
+  <footer>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Support Server</a>
+    <span class="footer-item">Discord: zerge5757</span>
+  </footer>
+</div>
+
+</body>
+</html>
