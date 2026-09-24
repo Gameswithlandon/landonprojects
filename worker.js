@@ -5,18 +5,44 @@ const CHECKS = [
 
 const WINDOW_SECONDS = 30 * 24 * 3600; // 30 days
 
+const CSP = [
+  "default-src 'self'",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src https://fonts.gstatic.com",
+  "img-src 'self' data:",
+  "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
+  "connect-src 'self' https://healthchecks.io https://cloudflareinsights.com https://static.cloudflareinsights.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "frame-ancestors 'none'",
+].join('; ');
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    if (url.pathname === '/api/uptime') {
-      return handleUptime(env);
-    }
+    const response =
+      url.pathname === '/api/uptime'
+        ? await handleUptime(env)
+        : await env.ASSETS.fetch(request);
 
-    // Everything else: serve the static site files as before.
-    return env.ASSETS.fetch(request);
+    return withSecurityHeaders(response);
   },
 };
+
+function withSecurityHeaders(response) {
+  const headers = new Headers(response.headers);
+  headers.set('Content-Security-Policy', CSP);
+  headers.set('X-Content-Type-Options', 'nosniff');
+  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  headers.set('X-Frame-Options', 'DENY');
+  headers.set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
 
 async function handleUptime(env) {
   if (!env.HC_API_KEY) {
@@ -50,7 +76,7 @@ async function handleUptime(env) {
           uptime_30d: computeUptime(flips, start, now, check.status),
         };
       } catch (err) {
-        results[c.key] = { label: c.label, status: 'unknown', last_ping: null, uptime_30d: null, debug: String(err && err.message || err) };
+        results[c.key] = { label: c.label, status: 'unknown', last_ping: null, uptime_30d: null };
       }
     })
   );

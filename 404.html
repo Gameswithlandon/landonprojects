@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Landon Projects</title>
+<meta name="theme-color" content="#0a0a0c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0c'/%3E%3Ctext x='7' y='23' font-family='monospace' font-size='20' fill='%23ffb300'%3E%3E%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --border: #232326;
+    --amber: #ffb300;
+    --cyan: #5fc9d9;
+    --text: #e8e6e1;
+    --muted: #85858c;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: dark; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse 120% 55% at 50% -10%, #141416 0%, #0a0a0c 45%, #060608 100%);
+    color: var(--text);
+    font-family: var(--mono);
+  }
+  a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid transparent; }
+  a:hover, a:focus-visible { border-bottom-color: var(--cyan); }
+  .box { text-align: center; padding: 1.5rem; }
+  .prompt { color: var(--amber); }
+  .out { color: var(--muted); margin: 0.6rem 0 1.4rem; }
+</style>
+</head>
+<body>
+  <div class="box">
+    <div><span class="prompt">$</span> cat 404.txt</div>
+    <p class="out">nothing here — wrong path</p>
+    <a href="/">back to landon@projects</a>
+  </div>
+</body>
+</html>
