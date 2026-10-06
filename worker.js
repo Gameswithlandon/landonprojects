@@ -21,23 +21,12 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    if (url.pathname === '/synapse' || url.pathname.startsWith('/synapse/')) {
-      return withSecurityHeaders(await notFound(request, env));
+    if (url.hostname === 'synapse.landonprojects.com') {
+      return withSecurityHeaders(await synapseResponse(request, env, url));
     }
 
-    if (url.hostname === 'synapse.landonprojects.com') {
-      const synapsePage =
-        url.pathname === '/terms'
-          ? '/synapse/terms'
-          : url.pathname === '/privacy'
-            ? '/synapse/privacy'
-            : null;
-
-      if (synapsePage) {
-        const assetUrl = new URL(request.url);
-        assetUrl.pathname = synapsePage;
-        return withSecurityHeaders(await env.ASSETS.fetch(new Request(assetUrl, request)));
-      }
+    if (url.pathname === '/synapse' || url.pathname.startsWith('/synapse/')) {
+      return withSecurityHeaders(await notFound(request, env));
     }
 
     const response =
@@ -49,9 +38,32 @@ export default {
   },
 };
 
-async function notFound(request, env) {
+const SYNAPSE_PAGES = {
+  '/': '/synapse/index.html',
+  '/index.html': '/synapse/index.html',
+  '/terms': '/synapse/terms',
+  '/privacy': '/synapse/privacy',
+  '/logo.png': '/synapse/logo.png',
+  '/site.css': '/synapse/site.css',
+  '/terms.pdf': '/synapse/terms.pdf',
+  '/privacy.pdf': '/synapse/privacy.pdf',
+};
+
+async function synapseResponse(request, env, url) {
+  const page = SYNAPSE_PAGES[url.pathname] || null;
+
+  if (!page) {
+    return notFound(request, env, '/synapse/404.html');
+  }
+
+  const assetUrl = new URL(request.url);
+  assetUrl.pathname = page;
+  return env.ASSETS.fetch(new Request(assetUrl, request));
+}
+
+async function notFound(request, env, pathname = '/404') {
   const notFoundUrl = new URL(request.url);
-  notFoundUrl.pathname = '/404';
+  notFoundUrl.pathname = pathname;
   const page = await env.ASSETS.fetch(new Request(notFoundUrl, request));
   return new Response(page.body, {
     status: 404,
