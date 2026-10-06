@@ -39,8 +39,8 @@ export default {
 };
 
 const SYNAPSE_PAGES = {
-  '/': '/synapse/index.html',
-  '/index.html': '/synapse/index.html',
+  '/': '/synapse/',
+  '/index.html': '/synapse/',
   '/terms': '/synapse/terms',
   '/privacy': '/synapse/privacy',
   '/logo.png': '/synapse/logo.png',
@@ -53,7 +53,7 @@ async function synapseResponse(request, env, url) {
   const page = SYNAPSE_PAGES[url.pathname] || null;
 
   if (!page) {
-    return notFound(request, env, '/synapse/404.html');
+    return notFound(request, env, '/synapse/404');
   }
 
   const assetUrl = new URL(request.url);
