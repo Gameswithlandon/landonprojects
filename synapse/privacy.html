@@ -5,168 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Privacy Policy — Synapse</title>
 <meta name="description" content="Privacy policy for the Synapse Discord bot.">
-<meta name="theme-color" content="#0a0a0c">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0c'/%3E%3Ctext x='7' y='23' font-family='monospace' font-size='20' fill='%23ffb300'%3E%3E%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#0f1038">
+<link rel="icon" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Lexend:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0a0a0c;
-    --bg-raised: #111114;
-    --border: #232326;
-    --amber: #ffb300;
-    --amber-dim: #b8830a;
-    --cyan: #5fc9d9;
-    --text: #e8e6e1;
-    --muted: #85858c;
-    --mono: 'JetBrains Mono', ui-monospace, monospace;
-    --accent: 'Lexend', system-ui, sans-serif;
-    --sans: system-ui, sans-serif;
-  }
-
-  * { box-sizing: border-box; }
-  html { color-scheme: dark; }
-
-  body {
-    margin: 0;
-    position: relative;
-    background: radial-gradient(ellipse 120% 55% at 50% -10%, #141416 0%, #0a0a0c 45%, #060608 100%);
-    color: var(--text);
-    font-family: var(--sans);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
-  }
-
-  a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid transparent; }
-  a:hover, a:focus-visible { border-bottom-color: var(--cyan); }
-  a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
-
-  .topbar {
-    position: relative;
-    z-index: 1;
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 1.5rem 1.5rem 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .brand {
-    font-family: var(--sans);
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--amber);
-    border-bottom: none;
-  }
-
-  .brand:hover, .brand:focus-visible { border-bottom: none; opacity: 0.8; }
-
-  .topnav {
-    display: flex;
-    gap: 1.25rem;
-    font-family: var(--sans);
-    font-size: 0.85rem;
-  }
-
-  .wrap {
-    position: relative;
-    z-index: 1;
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 3rem 1.5rem 4rem;
-  }
-
-  h1 {
-    font-family: var(--sans);
-    font-size: 1.85rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    color: var(--text);
-    margin: 0 0 0.4rem;
-  }
-
-  .updated {
-    font-family: var(--sans);
-    font-size: 0.9rem;
-    color: var(--muted);
-    margin: 0 0 2.25rem;
-  }
-
-  .legal {
-    font-family: var(--sans);
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--text);
-  }
-
-  .legal h2 {
-    font-family: var(--sans);
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--text);
-    margin: 2.25rem 0 0.7rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .legal p { margin: 0 0 1rem; max-width: 62ch; }
-  .legal ul { margin: 0 0 1rem; padding-left: 1.2rem; max-width: 62ch; }
-  .legal li { margin: 0.35rem 0; }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: var(--sans);
-    font-size: 0.92rem;
-    margin: 0 0 1rem;
-  }
-
-  th, td {
-    text-align: left;
-    padding: 0.55rem 0.4rem;
-    border-top: 1px solid var(--border);
-    vertical-align: top;
-  }
-
-  tr:last-child td { border-bottom: 1px solid var(--border); }
-  th { color: var(--muted); font-weight: 500; }
-
-  footer {
-    margin-top: 3.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-    font-family: var(--sans);
-    font-size: 0.9rem;
-  }
-
-  .footer-item { color: var(--muted); }
-
-  @media (max-width: 480px) {
-    .wrap { padding: 3rem 1.25rem 3rem; }
-    .topbar { padding: 1.25rem 1.25rem 1rem; }
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site.css">
 </head>
-<body>
+<body class="doc">
 
-<header class="topbar">
-  <a class="brand" href="/terms">Synapse</a>
-  <nav class="topnav" aria-label="Legal">
-    <a href="/terms">Terms of Service</a>
-    <a href="/privacy" aria-current="page">Privacy Policy</a>
-  </nav>
+<header class="nav-shell">
+  <div class="nav-pill">
+    <a class="brand" href="/"><span class="brand-mark"><img src="/logo.png" alt="" width="34" height="34"></span><span class="brand-name">Synapse</span></a>
+    <nav class="topnav" aria-label="Primary">
+      <a href="/">Home</a>
+      <a href="/terms">Terms</a>
+      <a href="/privacy" aria-current="page">Privacy</a>
+      <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Support</a>
+    </nav>
+    <a class="button nav-cta" href="https://discord.com/oauth2/authorize?client_id=1551712324245524562&amp;permissions=268520448&amp;scope=bot%20applications.commands" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"/></svg><span class="cta-long">Add to Discord</span><span class="cta-short">Add</span></a>
+  </div>
 </header>
 
-<div class="wrap">
+<div class="wrap read">
   <h1>Privacy Policy</h1>
-  <p class="updated">Effective September 24, 2026</p>
+  <div class="doc-head">
+    <p class="updated">Effective September 24, 2026</p>
+    <a class="ghost doc-download" href="/privacy.pdf" download="Synapse-Privacy-Policy.pdf">Download PDF</a>
+  </div>
 
   <article class="legal">
     <p>This policy describes how the hosted Synapse Discord bot handles information. Synapse is operated by Landon. It connects a public community server (a Spoke) to a private staff server (a Hub), or runs both roles in one Standalone server.</p>
@@ -190,18 +56,18 @@
 
     <h2>4. Data Retention</h2>
     <p>Configuration, links, staff roles, and staff profiles stay while the server uses Synapse, and are deleted or detached when setup is reset or a person is fired. Ticket and operational logs follow the retention window of the Hub’s tier:</p>
-    <table>
+    <div class="table-scroll"><table>
       <thead>
         <tr><th>Tier</th><th>Log retention</th></tr>
       </thead>
       <tbody>
-        <tr><td>Starter</td><td>7 days</td></tr>
-        <tr><td>Growth</td><td>30 days</td></tr>
-        <tr><td>Network</td><td>90 days</td></tr>
-        <tr><td>Enterprise</td><td>While the subscription is active (permanent for that term)</td></tr>
-        <tr><td>Bespoke</td><td>As agreed for that instance</td></tr>
+        <tr><td data-label="Tier">Starter</td><td data-label="Log retention">7 days</td></tr>
+        <tr><td data-label="Tier">Growth</td><td data-label="Log retention">30 days</td></tr>
+        <tr><td data-label="Tier">Network</td><td data-label="Log retention">90 days</td></tr>
+        <tr><td data-label="Tier">Enterprise</td><td data-label="Log retention">While the subscription is active (permanent for that term)</td></tr>
+        <tr><td data-label="Tier">Bespoke</td><td data-label="Log retention">As agreed for that instance</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p>Pending link requests that are approved or denied are removed from the request table when the review finishes. Database backups, if taken for the host, follow the host’s backup cycle and are not a second public copy of your server.</p>
 
     <h2>5. Third Parties</h2>
@@ -227,12 +93,31 @@
     <p>Privacy questions and data requests may be directed to Discord user zerge5757 or raised in the <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Synapse Support server</a>. These are the only official contact channels.</p>
   </article>
 
-  <footer>
-    <a href="/terms">Terms of Service</a>
-    <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Support Server</a>
-    <span class="footer-item">Discord: zerge5757</span>
-  </footer>
 </div>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="/"><span class="brand-mark"><img src="/logo.png" alt="" width="34" height="34"></span><span class="brand-name">Synapse</span></a>
+      <p>A staff bot for Discord. One server is enough. A separate staff server works when the community and the staff should stay apart.</p>
+      <a class="social" href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener" aria-label="Synapse support server on Discord"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"/></svg></a>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <p class="footer-label">Resources</p>
+        <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Support Server</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-label">Legal</p>
+        <a href="/terms">Terms of Service</a>
+        <a href="/privacy">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bar">
+    <span>© 2026 Synapse</span>
+  </div>
+</footer>
 
 </body>
 </html>
