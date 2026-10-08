@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+# Synapse marketing pages (synapse.landonprojects.com) are listed in this sitemap.
 Sitemap: https://landonprojects.com/sitemap.xml

@@ -226,6 +226,73 @@ a:hover { text-decoration: underline; text-underline-offset: 0.18em; }
   margin-top: 1.6rem;
 }
 
+.status-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 0.85rem;
+  margin-top: 1.15rem;
+}
+
+.status-label {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.28rem 0.7rem 0.28rem 0.55rem;
+  color: var(--muted);
+  background: rgba(7, 16, 40, 0.65);
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.status-pill::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+}
+
+.status-pill.is-online {
+  color: var(--cyan);
+  border-color: rgba(0, 225, 252, 0.45);
+  background: rgba(0, 225, 252, 0.08);
+}
+
+.status-pill.is-degraded {
+  color: #f0c674;
+  border-color: rgba(240, 198, 116, 0.4);
+  background: rgba(240, 198, 116, 0.08);
+}
+
+.status-pill.is-offline {
+  color: #ff8a9b;
+  border-color: rgba(255, 138, 155, 0.4);
+  background: rgba(255, 138, 155, 0.08);
+}
+
+.status-pill.is-unknown,
+.status-pill.is-checking {
+  color: var(--muted);
+}
+
+.status-checked {
+  color: #8ea0c4;
+  font-size: 0.82rem;
+}
+
 .button,
 .ghost {
   display: inline-flex;
@@ -337,6 +404,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.18em; }
 .station h2,
 .solo h2,
 .quiet h2,
+.starts h2,
 .tools h2 {
   margin: 0;
   font-family: var(--display);
@@ -418,12 +486,43 @@ a:hover { text-decoration: underline; text-underline-offset: 0.18em; }
 
 .hint { margin: 0.85rem 0 0; font-size: 0.92rem; }
 
-.tools { margin-top: 3rem; }
+.starts { margin-top: 3rem; }
 
+.starts h2,
 .tools h2,
 .quiet h2 {
   font-size: clamp(1.8rem, 3vw, 2.3rem);
 }
+
+.step-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+.step {
+  padding: 1.15rem 1.15rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(0, 225, 252, 0.07), transparent 42%),
+    var(--panel);
+}
+
+.step h3 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.step p { margin: 0.4rem 0 0; color: var(--muted); }
+
+.step .eyebrow { margin-bottom: 0.55rem; }
+
+.tools { margin-top: 3rem; }
 
 .tool-grid {
   display: grid;
@@ -736,6 +835,7 @@ body.lost {
   .hero,
   .bridge,
   .split,
+  .step-grid,
   .tool-grid,
   .footer-grid { grid-template-columns: 1fr; }
 

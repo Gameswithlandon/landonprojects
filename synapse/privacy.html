@@ -1,123 +1,319 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Privacy Policy — Synapse</title>
-<meta name="description" content="Privacy policy for the Synapse Discord bot.">
-<meta name="theme-color" content="#0f1038">
-<link rel="icon" href="/logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/site.css">
-</head>
-<body class="doc">
-
-<header class="nav-shell">
-  <div class="nav-pill">
-    <a class="brand" href="/"><span class="brand-mark"><img src="/logo.png" alt="" width="34" height="34"></span><span class="brand-name">Synapse</span></a>
-    <nav class="topnav" aria-label="Primary">
-      <a href="/">Home</a>
-      <a href="/terms">Terms</a>
-      <a href="/privacy" aria-current="page">Privacy</a>
-      <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Support</a>
-    </nav>
-    <a class="button nav-cta" href="https://discord.com/oauth2/authorize?client_id=1551712324245524562&amp;permissions=268520448&amp;scope=bot%20applications.commands" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"/></svg><span class="cta-long">Add to Discord</span><span class="cta-short">Add</span></a>
-  </div>
-</header>
-
-<div class="wrap read">
-  <h1>Privacy Policy</h1>
-  <div class="doc-head">
-    <p class="updated">Effective September 24, 2026</p>
-    <a class="ghost doc-download" href="/privacy.pdf" download="Synapse-Privacy-Policy.pdf">Download PDF</a>
-  </div>
-
-  <article class="legal">
-    <p>This policy describes how the hosted Synapse Discord bot handles information. Synapse is operated by Landon. It connects a public community server (a Spoke) to a private staff server (a Hub), or runs both roles in one Standalone server.</p>
-
-    <h2>1. How Synapse Accesses Discord</h2>
-    <p>Synapse operates strictly through slash commands, modals, and message components. It does not request or use Discord’s Message Content intent. It does not read, store, or scan the text of ordinary channel messages. The only content it receives is what you submit in a command, button, select menu, or modal, plus the Discord IDs Discord attaches to that interaction.</p>
-
-    <h2>2. Information We Store</h2>
-    <p>Operational data is stored in PostgreSQL. Discord snowflakes are stored as text, not as JavaScript numbers. Records can include:</p>
-    <ul>
-      <li>Server IDs, whether a server is a Hub, Spoke, or Standalone, the Hub link code, the triage channel ID, subscription tier, log channel ID, and AI smartness setting.</li>
-      <li>Hub-to-Spoke links, and pending Spoke link requests (requesting server, Hub, requesting user ID, and request time).</li>
-      <li>Staff role mappings: role ID, Hub ID, permission level, and flags for quotas, leave approval, and strikes.</li>
-      <li>Staff profiles: user ID, Hub ID, duty status, weekly quotas, and an optional shift start time.</li>
-      <li>Subscription end dates when a referral or Top.gg vote grant applies.</li>
-    </ul>
-    <p>We do not store message content, voice audio, or a full member list. Link codes are secrets for joining a Hub. Treat a leaked code as compromised and rotate it with the setup command.</p>
-
-    <h2>3. How We Use Information</h2>
-    <p>We use this data to route Spoke interactions to the correct Hub triage channel, to enforce Spoke limits and staff permission levels, to show staff lists, and to apply the subscription tier you are on. Future AI features, if enabled, would use command and ticket context you submit to the bot, not a scrape of channel history, and would be sent to Google’s Gemini API only for that request.</p>
-
-    <h2>4. Data Retention</h2>
-    <p>Configuration, links, staff roles, and staff profiles stay while the server uses Synapse, and are deleted or detached when setup is reset or a person is fired. Ticket and operational logs follow the retention window of the Hub’s tier:</p>
-    <div class="table-scroll"><table>
-      <thead>
-        <tr><th>Tier</th><th>Log retention</th></tr>
-      </thead>
-      <tbody>
-        <tr><td data-label="Tier">Starter</td><td data-label="Log retention">7 days</td></tr>
-        <tr><td data-label="Tier">Growth</td><td data-label="Log retention">30 days</td></tr>
-        <tr><td data-label="Tier">Network</td><td data-label="Log retention">90 days</td></tr>
-        <tr><td data-label="Tier">Enterprise</td><td data-label="Log retention">While the subscription is active (permanent for that term)</td></tr>
-        <tr><td data-label="Tier">Bespoke</td><td data-label="Log retention">As agreed for that instance</td></tr>
-      </tbody>
-    </table></div>
-    <p>Pending link requests that are approved or denied are removed from the request table when the review finishes. Database backups, if taken for the host, follow the host’s backup cycle and are not a second public copy of your server.</p>
-
-    <h2>5. Third Parties</h2>
-    <ul>
-      <li>Discord, because the bot must call Discord’s API to post triage messages, assign roles, and answer commands.</li>
-      <li>Stripe, if you pay for Growth, Network, Enterprise, or Bespoke. Payment is handled off Discord through a Stripe payment link. We do not store full card numbers.</li>
-      <li>Top.gg, if your staff vote for the bot. Vote counts are used only to apply the published vote reward.</li>
-      <li>Google Gemini, only if an AI feature is turned on for your Hub and you invoke it. The smartness tier is a setting on the Hub, not a copy of your chat.</li>
-    </ul>
-    <p>We do not sell personal information. We do not use the data for advertising.</p>
-
-    <h2>6. Storage and Security</h2>
-    <p>The PostgreSQL database runs on infrastructure operated for the hosted bot. Access is limited to operating Synapse. Cross-server actions check the stored Hub-and-Spoke link before they run.</p>
-
-    <h2>7. Your Choices and Rights</h2>
-    <p>Server administrators can rotate a link code, change the log channel and smartness tier, remove a staff role mapping, fire a staff profile, or remove the bot. To ask for a lookup or deletion of the rows tied to your user ID or server ID, contact Discord user zerge5757 or open a request in the <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Synapse Support server</a>. We may need to keep a record where Discord, payment disputes, or abuse investigations require it.</p>
-    <p>Synapse is not directed at children under 13. Discord’s age rules still apply. Do not submit another person’s private information in a command unless your staff workflow requires that ID and you have a right to process it.</p>
-
-    <h2>8. Changes to This Policy</h2>
-    <p>We may update this policy by posting a new version here and changing the effective date. The current version is the one on this page. Use of the bot is also covered by the <a href="/terms">Terms of Service</a>.</p>
-
-    <h2>9. Contact</h2>
-    <p>Privacy questions and data requests may be directed to Discord user zerge5757 or raised in the <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Synapse Support server</a>. These are the only official contact channels.</p>
-  </article>
-
-</div>
-
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a class="brand" href="/"><span class="brand-mark"><img src="/logo.png" alt="" width="34" height="34"></span><span class="brand-name">Synapse</span></a>
-      <p>A staff bot for Discord. One server is enough. A separate staff server works when the community and the staff should stay apart.</p>
-      <a class="social" href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener" aria-label="Synapse support server on Discord"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"/></svg></a>
-    </div>
-    <div class="footer-links">
-      <div class="footer-col">
-        <p class="footer-label">Resources</p>
-        <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Support Server</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy — Synapse</title>
+    <meta
+      name="description"
+      content="Privacy policy for the Synapse Discord bot."
+    />
+    <meta name="theme-color" content="#0f1038" />
+    <link rel="icon" href="/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/site.css" />
+  </head>
+  <body class="doc">
+    <header class="nav-shell">
+      <div class="nav-pill">
+        <a class="brand" href="/"
+          ><span class="brand-mark"
+            ><img src="/logo.png" alt="" width="34" height="34" /></span
+          ><span class="brand-name">Synapse</span></a
+        >
+        <nav class="topnav" aria-label="Primary">
+          <a href="/">Home</a>
+          <a href="/terms">Terms</a>
+          <a href="/privacy" aria-current="page">Privacy</a>
+          <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener"
+            >Support</a
+          >
+        </nav>
+        <a
+          class="button nav-cta"
+          href="https://discord.com/oauth2/authorize?client_id=1551712324245524562&amp;permissions=395942415360&amp;scope=bot%20applications.commands"
+          target="_blank"
+          rel="noopener"
+          ><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"
+            /></svg
+          ><span class="cta-long">Add to Discord</span
+          ><span class="cta-short">Add</span></a
+        >
       </div>
-      <div class="footer-col">
-        <p class="footer-label">Legal</p>
-        <a href="/terms">Terms of Service</a>
-        <a href="/privacy">Privacy Policy</a>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bar">
-    <span>© 2026 Synapse</span>
-  </div>
-</footer>
+    </header>
 
-</body>
+    <div class="wrap read">
+      <h1>Privacy Policy</h1>
+      <div class="doc-head">
+        <p class="updated">Effective October 8, 2026</p>
+        <a
+          class="ghost doc-download"
+          href="/privacy.pdf"
+          download="Synapse-Privacy-Policy.pdf"
+          >Download PDF</a
+        >
+      </div>
+
+      <article class="legal">
+        <p>
+          This policy describes how the hosted Synapse Discord bot handles
+          information. Synapse is operated by Landon. It connects a public
+          community server (a Spoke) to a private staff server (a Hub), or runs
+          both roles in one Standalone server.
+        </p>
+
+        <h2>1. How Synapse Accesses Discord</h2>
+        <p>
+          Synapse operates mainly through slash commands, modals, and message
+          components. It also uses Discord’s Message Content intent only for
+          channel IDs stored as open tickets, so it can mirror text, images, and
+          other files between the member thread and the Hub triage thread, and
+          so it can build a transcript when a ticket is closed or deleted. It
+          does not read or store the text of ordinary chat outside those ticket
+          channels. In Hub and Spoke servers, message events may increment daily
+          counts on hired staff profiles (who posted and in which server),
+          without saving the text of non-ticket messages.
+        </p>
+
+        <h2>2. Information We Store</h2>
+        <p>
+          Operational data is stored in PostgreSQL. Discord snowflakes are
+          stored as text, not as JavaScript numbers. Records can include:
+        </p>
+        <ul>
+          <li>
+            Server IDs, whether a server is a Hub, Spoke, or Standalone, the Hub
+            link code, the triage channel ID, primary staff and leave role
+            settings, ticket panel channels, ticket auto-close and alert role
+            settings, and a subscription tier field reserved for later billing.
+          </li>
+          <li>
+            Hub-to-Spoke links, and pending Spoke link requests (requesting
+            server, Hub, requesting user ID, and request time).
+          </li>
+          <li>
+            Per-kind log routes (staff, progression, leave, discipline, tickets,
+            transcripts) with target channel and enabled flag.
+          </li>
+          <li>
+            Staff ranks: name, Discord role, Hub ID, permission level, and flags
+            such as leave approval and issue strikes.
+          </li>
+          <li>
+            Staff profiles and one rank assignment per person, duty status,
+            leave requests, and strike records (including removed strikes kept
+            as history).
+          </li>
+          <li>
+            Tickets: opener, reason, status, thread IDs, claim info, private
+            staff notes, message-copy maps for mirroring, and daily staff
+            message counts used on profiles.
+          </li>
+        </ul>
+        <p>
+          Open ticket conversations may be mirrored live and saved as a text
+          transcript when a ticket is closed or deleted while open. We do not
+          store voice audio or a full member list. Link codes are secrets for
+          joining a Hub. Treat a leaked code as compromised and rotate it with
+          the setup command.
+        </p>
+
+        <h2>3. How We Use Information</h2>
+        <p>
+          We use this data to route Spoke traffic to the correct Hub, to run
+          staff and leave workflows, to mirror and close tickets, to post module
+          logs, and to show staff profiles. When a hired staff member or Hub
+          administrator runs <code>/ticket summary</code>, Synapse builds a
+          transcript from the member’s ticket thread and sends that text to
+          Google’s Gemini API for a private staff-only summary. The person
+          chooses Lite, Flash, Advanced, or Deep Thinking for that request; it
+          is not a Hub-wide setting. Summary request counts are kept in process
+          memory for a rolling 24 hours and are not a stored copy of the
+          transcript.
+        </p>
+
+        <h2>4. Data Retention</h2>
+        <p>
+          Configuration, links, staff ranks, profiles, leave, strikes, and
+          tickets stay while the server uses Synapse, and are cleaned up when
+          the bot leaves a guild or when staff are fired / tickets are removed
+          under existing flows. Staff message-day counts are pruned after about
+          90 days. When paid tiers are enforced later, ticket and operational
+          log retention may follow the Hub’s tier:
+        </p>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Tier</th>
+                <th>Log retention</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Tier">Starter</td>
+                <td data-label="Log retention">7 days</td>
+              </tr>
+              <tr>
+                <td data-label="Tier">Growth</td>
+                <td data-label="Log retention">30 days</td>
+              </tr>
+              <tr>
+                <td data-label="Tier">Network</td>
+                <td data-label="Log retention">90 days</td>
+              </tr>
+              <tr>
+                <td data-label="Tier">Enterprise</td>
+                <td data-label="Log retention">
+                  While the subscription is active (permanent for that term)
+                </td>
+              </tr>
+              <tr>
+                <td data-label="Tier">Bespoke</td>
+                <td data-label="Log retention">As agreed for that instance</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Until then, the first public release does not enforce those log
+          windows as product limits. Pending link requests that are approved or
+          denied are removed from the request table when the review finishes.
+          Database backups, if taken for the host, follow the host’s backup
+          cycle and are not a second public copy of your server.
+        </p>
+
+        <h2>5. Third Parties</h2>
+        <ul>
+          <li>
+            Discord, because the bot must call Discord’s API to post triage
+            messages, assign roles, mirror ticket messages, and answer commands.
+          </li>
+          <li>
+            Stripe, when paid plans are offered. Payment will be handled off
+            Discord through a Stripe payment link. We do not store full card
+            numbers.
+          </li>
+          <li>
+            Top.gg, when voting rewards open. Vote counts will be used only to
+            apply the published vote reward.
+          </li>
+          <li>
+            Google Gemini, when someone runs <code>/ticket summary</code>. The
+            ticket transcript for that request is sent to Google for
+            summarization and is not used for advertising.
+          </li>
+        </ul>
+        <p>
+          We do not sell personal information. We do not use the data for
+          advertising.
+        </p>
+
+        <h2>6. Storage and Security</h2>
+        <p>
+          The PostgreSQL database runs on infrastructure operated for the hosted
+          bot (including a managed Neon database for the official instance).
+          Access is limited to operating Synapse. Cross-server actions check the
+          stored Hub-and-Spoke link before they run.
+        </p>
+
+        <h2>7. Your Choices and Rights</h2>
+        <p>
+          Server administrators can rotate a link code, change log routes and
+          ticket settings, remove a staff rank mapping, fire a staff profile, or
+          remove the bot. To ask for a lookup or deletion of the rows tied to
+          your user ID or server ID, contact Discord user zerge5757 or open a
+          request in the
+          <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener"
+            >Synapse Support server</a
+          >. We may need to keep a record where Discord, payment disputes, or
+          abuse investigations require it.
+        </p>
+        <p>
+          Synapse is not directed at children under 13. Discord’s age rules
+          still apply. Do not submit another person’s private information in a
+          command unless your staff workflow requires that ID and you have a
+          right to process it.
+        </p>
+
+        <h2>8. Changes to This Policy</h2>
+        <p>
+          We may update this policy by posting a new version here and changing
+          the effective date. The current version is the one on this page. Use
+          of the bot is also covered by the
+          <a href="/terms">Terms of Service</a>.
+        </p>
+
+        <h2>9. Contact</h2>
+        <p>
+          Privacy questions and data requests may be directed to Discord user
+          zerge5757 or raised in the
+          <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener"
+            >Synapse Support server</a
+          >. These are the only official contact channels.
+        </p>
+      </article>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="/"
+            ><span class="brand-mark"
+              ><img src="/logo.png" alt="" width="34" height="34" /></span
+            ><span class="brand-name">Synapse</span></a
+          >
+          <p>
+            A staff bot for Discord. One server is enough. A separate staff
+            server works when the community and the staff should stay apart.
+          </p>
+          <a
+            class="social"
+            href="https://discord.gg/VJcacfEuyE"
+            target="_blank"
+            rel="noopener"
+            aria-label="Synapse support server on Discord"
+            ><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"
+              /></svg
+          ></a>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <p class="footer-label">Resources</p>
+            <a
+              href="https://discord.gg/VJcacfEuyE"
+              target="_blank"
+              rel="noopener"
+              >Support Server</a
+            >
+            <a
+              href="https://github.com/Gameswithlandon/synapse"
+              target="_blank"
+              rel="noopener"
+              >Source</a
+            >
+          </div>
+          <div class="footer-col">
+            <p class="footer-label">Legal</p>
+            <a href="/terms">Terms of Service</a>
+            <a href="/privacy">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <span>© 2026 Synapse</span>
+      </div>
+    </footer>
+  </body>
 </html>

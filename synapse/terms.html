@@ -1,114 +1,307 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terms of Service — Synapse</title>
-<meta name="description" content="Terms of Service for the Synapse Discord bot.">
-<meta name="theme-color" content="#0f1038">
-<link rel="icon" href="/logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/site.css">
-</head>
-<body class="doc">
-
-<header class="nav-shell">
-  <div class="nav-pill">
-    <a class="brand" href="/"><span class="brand-mark"><img src="/logo.png" alt="" width="34" height="34"></span><span class="brand-name">Synapse</span></a>
-    <nav class="topnav" aria-label="Primary">
-      <a href="/">Home</a>
-      <a href="/terms" aria-current="page">Terms</a>
-      <a href="/privacy">Privacy</a>
-      <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Support</a>
-    </nav>
-    <a class="button nav-cta" href="https://discord.com/oauth2/authorize?client_id=1551712324245524562&amp;permissions=268520448&amp;scope=bot%20applications.commands" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"/></svg><span class="cta-long">Add to Discord</span><span class="cta-short">Add</span></a>
-  </div>
-</header>
-
-<div class="wrap read">
-  <h1>Terms of Service</h1>
-  <div class="doc-head">
-    <p class="updated">Effective September 24, 2026</p>
-    <a class="ghost doc-download" href="/terms.pdf" download="Synapse-Terms-of-Service.pdf">Download PDF</a>
-  </div>
-
-  <article class="legal">
-    <p>These terms govern use of Synapse, the hosted Discord bot operated by Landon (“we”, “us”). By inviting Synapse, running its commands, or paying for a subscription, you agree to these terms and to Discord’s own Terms of Service and Community Guidelines. If you do not agree, remove the bot from your server.</p>
-
-    <h2>1. The Service</h2>
-    <p>Synapse is a hub-and-spoke staff bot. A public community server is a Spoke. A private staff server is a Hub. Standalone mode uses one server as both. Spoke traffic is routed to the Hub triage channel, and staff actions taken in the Hub are applied back in the Spoke. Hub administrators approve or deny Spoke link requests. A 6-character link code identifies the Hub. Rotating that code does not disconnect Spokes that are already linked.</p>
-    <p>Synapse runs only through slash commands, modals, and message components. It does not request or use Discord’s Message Content intent, and it does not read the text of ordinary chat messages.</p>
-
-    <h2>2. Eligibility</h2>
-    <p>You must be allowed to use Discord and to add bots to a server. Adding Synapse, approving a Spoke, or changing staff roles requires permission in that server, normally Administrator for setup and settings. You are responsible for the configuration you choose, including which channel receives triage and which roles count as staff.</p>
-
-    <h2>3. Acceptable Use</h2>
-    <p>You may not use Synapse to break Discord’s rules or the law, to harass people, to probe or disrupt the bot, or to share a Hub link code with servers you do not administer. Staff actions such as hire and fire must follow the permission levels configured on the Hub. We may refuse a link request, revoke a link, or remove the bot from a server that abuses the service.</p>
-
-    <h2>4. Subscriptions and Billing</h2>
-    <p>Paid plans are billed off Discord through a Stripe payment link. Discord’s in-app monetization is not used. Prices and limits for the hosted service are:</p>
-    <div class="table-scroll"><table>
-      <thead>
-        <tr><th>Tier</th><th>Price</th><th>Spokes</th><th>Tickets</th><th>Logs</th></tr>
-      </thead>
-      <tbody>
-        <tr><td data-label="Tier">Starter</td><td data-label="Price">$0</td><td data-label="Spokes">1</td><td data-label="Tickets">5 concurrent</td><td data-label="Logs">7 days</td></tr>
-        <tr><td data-label="Tier">Growth</td><td data-label="Price">$5</td><td data-label="Spokes">2</td><td data-label="Tickets">25 concurrent</td><td data-label="Logs">30 days</td></tr>
-        <tr><td data-label="Tier">Network</td><td data-label="Price">$12</td><td data-label="Spokes">5</td><td data-label="Tickets">100 concurrent</td><td data-label="Logs">90 days</td></tr>
-        <tr><td data-label="Tier">Enterprise</td><td data-label="Price">$25–$30</td><td data-label="Spokes">Unlimited</td><td data-label="Tickets">Unlimited</td><td data-label="Logs">Permanent</td></tr>
-        <tr><td data-label="Tier">Bespoke</td><td data-label="Price">Custom</td><td data-label="Spokes">Isolated</td><td data-label="Tickets">Custom</td><td data-label="Logs">Custom</td></tr>
-      </tbody>
-    </table></div>
-    <p>Spoke limits count external community servers only. A Standalone server’s link to itself does not use a Spoke slot. Growth may also be granted for a referral installation or a pooled Top.gg vote month, as described in the bot. Enterprise may include custom embed colors, CSV export, and a daily AI compute cap. Bespoke is a separate arrangement, not a self-serve checkout.</p>
-    <p>Subscriptions apply to the official hosted bot. The source is published under AGPL-3.0 for inspection. That publication is not a support agreement and not an offer to run your own production instance.</p>
-
-    <h2>5. Availability</h2>
-    <p>Synapse is provided as available. There is no uptime guarantee and no support SLA for the public tiers. Features described as planned, including AI summaries, may change or ship later. We may suspend the bot for maintenance, abuse, or Discord platform limits.</p>
-
-    <h2>6. Your Content and Our License</h2>
-    <p>You keep ownership of server configuration and staff records you submit through commands. You grant us a limited license to store and process that data only to operate Synapse, as described in the <a href="/privacy">Privacy Policy</a>. We do not claim ownership of your Discord messages. We do not receive message content.</p>
-
-    <h2>7. Termination</h2>
-    <p>You may remove Synapse from a server at any time. We may stop providing the bot to a server that violates these terms or Discord’s terms. Removing the bot does not by itself delete every database row immediately. Retention follows the privacy policy and the log window of the active tier.</p>
-
-    <h2>8. Disclaimers and Limitation of Liability</h2>
-    <p>Synapse is provided “as is.” We disclaim warranties of merchantability, fitness for a particular purpose, and non-infringement, to the extent the law allows. We are not responsible for moderation decisions your staff make with the bot, for Discord outages, or for loss of access when a role sits above the bot in the server role list.</p>
-    <p>To the extent the law allows, our total liability for a claim about Synapse is limited to the amount you paid us for the bot in the three months before the claim, or fifty US dollars if you paid nothing. We are not liable for indirect or consequential damages.</p>
-
-    <h2>9. Changes to These Terms</h2>
-    <p>We may update these terms by posting a new version on this page and changing the effective date. Continued use after that date is acceptance of the updated terms. If a change is material, we will also note it in the bot’s documentation command when practical.</p>
-
-    <h2>10. Contact</h2>
-    <p>Questions about these Terms may be directed to Discord user zerge5757 or raised in the <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Synapse Support server</a>. These are the only official contact channels.</p>
-  </article>
-
-</div>
-
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a class="brand" href="/"><span class="brand-mark"><img src="/logo.png" alt="" width="34" height="34"></span><span class="brand-name">Synapse</span></a>
-      <p>A staff bot for Discord. One server is enough. A separate staff server works when the community and the staff should stay apart.</p>
-      <a class="social" href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener" aria-label="Synapse support server on Discord"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"/></svg></a>
-    </div>
-    <div class="footer-links">
-      <div class="footer-col">
-        <p class="footer-label">Resources</p>
-        <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Support Server</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms of Service — Synapse</title>
+    <meta
+      name="description"
+      content="Terms of Service for the Synapse Discord bot."
+    />
+    <meta name="theme-color" content="#0f1038" />
+    <link rel="icon" href="/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/site.css" />
+  </head>
+  <body class="doc">
+    <header class="nav-shell">
+      <div class="nav-pill">
+        <a class="brand" href="/"
+          ><span class="brand-mark"
+            ><img src="/logo.png" alt="" width="34" height="34" /></span
+          ><span class="brand-name">Synapse</span></a
+        >
+        <nav class="topnav" aria-label="Primary">
+          <a href="/">Home</a>
+          <a href="/terms" aria-current="page">Terms</a>
+          <a href="/privacy">Privacy</a>
+          <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener"
+            >Support</a
+          >
+        </nav>
+        <a
+          class="button nav-cta"
+          href="https://discord.com/oauth2/authorize?client_id=1551712324245524562&amp;permissions=395942415360&amp;scope=bot%20applications.commands"
+          target="_blank"
+          rel="noopener"
+          ><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"
+            /></svg
+          ><span class="cta-long">Add to Discord</span
+          ><span class="cta-short">Add</span></a
+        >
       </div>
-      <div class="footer-col">
-        <p class="footer-label">Legal</p>
-        <a href="/terms">Terms of Service</a>
-        <a href="/privacy">Privacy Policy</a>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bar">
-    <span>© 2026 Synapse</span>
-  </div>
-</footer>
+    </header>
 
-</body>
+    <div class="wrap read">
+      <h1>Terms of Service</h1>
+      <div class="doc-head">
+        <p class="updated">Effective October 8, 2026</p>
+        <a
+          class="ghost doc-download"
+          href="/terms.pdf"
+          download="Synapse-Terms-of-Service.pdf"
+          >Download PDF</a
+        >
+      </div>
+
+      <article class="legal">
+        <p>
+          These terms govern use of Synapse, the hosted Discord bot operated by
+          Landon (“we”, “us”). By inviting Synapse, running its commands, or
+          paying for a subscription, you agree to these terms and to Discord’s
+          own Terms of Service and Community Guidelines. If you do not agree,
+          remove the bot from your server.
+        </p>
+
+        <h2>1. The Service</h2>
+        <p>
+          Synapse is a hub-and-spoke staff bot. A public community server is a
+          Spoke. A private staff server is a Hub. Standalone mode uses one
+          server as both. Spoke traffic is routed to the Hub triage channel, and
+          staff actions taken in the Hub are applied back in the Spoke. Hub
+          administrators approve or deny Spoke link requests. A 6-character link
+          code identifies the Hub. Rotating that code does not disconnect Spokes
+          that are already linked.
+        </p>
+        <p>
+          Setup, staff, leave, settings, and most ticket actions run through
+          slash commands, modals, and message components. Synapse also uses
+          Discord’s Message Content intent only for channels stored as open
+          tickets, so typed messages and attachments can be mirrored between the
+          member thread and the Hub triage thread. It does not read ordinary
+          chat outside those ticket channels.
+        </p>
+
+        <h2>2. Eligibility</h2>
+        <p>
+          You must be allowed to use Discord and to add bots to a server. Adding
+          Synapse, approving a Spoke, or changing staff roles requires
+          permission in that server, normally Administrator for setup and
+          settings. You are responsible for the configuration you choose,
+          including which channel receives triage and which roles count as
+          staff.
+        </p>
+
+        <h2>3. Acceptable Use</h2>
+        <p>
+          You may not use Synapse to break Discord’s rules or the law, to harass
+          people, to probe or disrupt the bot, or to share a Hub link code with
+          servers you do not administer. Staff actions such as hire and fire
+          must follow the permission levels configured on the Hub. We may refuse
+          a link request, revoke a link, or remove the bot from a server that
+          abuses the service.
+        </p>
+
+        <h2>4. Subscriptions and Billing</h2>
+        <p>
+          The first public release of the official hosted bot is free. Every Hub
+          gets the current feature set. Spoke caps, concurrent ticket caps, and
+          log-retention limits are not enforced yet. Paid plans, when billing is
+          turned on, will be billed off Discord through a Stripe payment link.
+          Discord’s in-app monetization is not used. The later tier model for
+          the hosted service is:
+        </p>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Tier</th>
+                <th>Price</th>
+                <th>Spokes</th>
+                <th>Tickets</th>
+                <th>Logs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Tier">Starter</td>
+                <td data-label="Price">$0</td>
+                <td data-label="Spokes">1</td>
+                <td data-label="Tickets">5 concurrent</td>
+                <td data-label="Logs">7 days</td>
+              </tr>
+              <tr>
+                <td data-label="Tier">Growth</td>
+                <td data-label="Price">$5</td>
+                <td data-label="Spokes">2</td>
+                <td data-label="Tickets">25 concurrent</td>
+                <td data-label="Logs">30 days</td>
+              </tr>
+              <tr>
+                <td data-label="Tier">Network</td>
+                <td data-label="Price">$12</td>
+                <td data-label="Spokes">5</td>
+                <td data-label="Tickets">100 concurrent</td>
+                <td data-label="Logs">90 days</td>
+              </tr>
+              <tr>
+                <td data-label="Tier">Enterprise</td>
+                <td data-label="Price">$25–$30</td>
+                <td data-label="Spokes">Unlimited</td>
+                <td data-label="Tickets">Unlimited</td>
+                <td data-label="Logs">Permanent</td>
+              </tr>
+              <tr>
+                <td data-label="Tier">Bespoke</td>
+                <td data-label="Price">Custom</td>
+                <td data-label="Spokes">Isolated</td>
+                <td data-label="Tickets">Custom</td>
+                <td data-label="Logs">Custom</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          When those limits are enforced, Spoke limits will count external
+          community servers only. A Standalone server’s link to itself will not
+          use a Spoke slot. Growth may also be granted for a referral
+          installation or a pooled Top.gg vote month, as described in the bot
+          when those programs open. Enterprise may include custom embed colors,
+          CSV export, and a daily AI compute cap. Bespoke is a separate
+          arrangement, not a self-serve checkout.
+        </p>
+        <p>
+          Subscriptions apply only to the official hosted bot. The source is
+          published under the Synapse Source License for inspection. That
+          publication is not a support agreement and not an offer to run your
+          own production instance.
+        </p>
+
+        <h2>5. Availability</h2>
+        <p>
+          Synapse is provided as available. There is no uptime guarantee and no
+          support SLA for the public tiers. Staff may request a private AI
+          summary of a ticket with <code>/ticket summary</code>; that feature
+          may change. Planned growth features such as Top.gg voting rewards and
+          paid tier enforcement may ship later. We may suspend the bot for
+          maintenance, abuse, or Discord platform limits.
+        </p>
+
+        <h2>6. Your Content and Our License</h2>
+        <p>
+          You keep ownership of server configuration and staff records you
+          submit through commands. You grant us a limited license to store and
+          process that data only to operate Synapse, as described in the
+          <a href="/privacy">Privacy Policy</a>. We do not claim ownership of
+          your Discord messages. Message content from open ticket threads may be
+          mirrored, stored for transcripts, and—when someone runs
+          <code>/ticket summary</code>—sent to Google’s Gemini API for that
+          request only.
+        </p>
+
+        <h2>7. Termination</h2>
+        <p>
+          You may remove Synapse from a server at any time. We may stop
+          providing the bot to a server that violates these terms or Discord’s
+          terms. Removing the bot does not by itself delete every database row
+          immediately. Retention follows the privacy policy and the log window
+          of the active tier.
+        </p>
+
+        <h2>8. Disclaimers and Limitation of Liability</h2>
+        <p>
+          Synapse is provided “as is.” We disclaim warranties of
+          merchantability, fitness for a particular purpose, and
+          non-infringement, to the extent the law allows. We are not responsible
+          for moderation decisions your staff make with the bot, for Discord
+          outages, or for loss of access when a role sits above the bot in the
+          server role list.
+        </p>
+        <p>
+          To the extent the law allows, our total liability for a claim about
+          Synapse is limited to the amount you paid us for the bot in the three
+          months before the claim, or fifty US dollars if you paid nothing. We
+          are not liable for indirect or consequential damages.
+        </p>
+
+        <h2>9. Changes to These Terms</h2>
+        <p>
+          We may update these terms by posting a new version on this page and
+          changing the effective date. Continued use after that date is
+          acceptance of the updated terms. If a change is material, we will also
+          note it in the bot’s documentation command when practical.
+        </p>
+
+        <h2>10. Contact</h2>
+        <p>
+          Questions about these Terms may be directed to Discord user zerge5757
+          or raised in the
+          <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener"
+            >Synapse Support server</a
+          >. These are the only official contact channels.
+        </p>
+      </article>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="/"
+            ><span class="brand-mark"
+              ><img src="/logo.png" alt="" width="34" height="34" /></span
+            ><span class="brand-name">Synapse</span></a
+          >
+          <p>
+            A staff bot for Discord. One server is enough. A separate staff
+            server works when the community and the staff should stay apart.
+          </p>
+          <a
+            class="social"
+            href="https://discord.gg/VJcacfEuyE"
+            target="_blank"
+            rel="noopener"
+            aria-label="Synapse support server on Discord"
+            ><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"
+              /></svg
+          ></a>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <p class="footer-label">Resources</p>
+            <a
+              href="https://discord.gg/VJcacfEuyE"
+              target="_blank"
+              rel="noopener"
+              >Support Server</a
+            >
+            <a
+              href="https://github.com/Gameswithlandon/synapse"
+              target="_blank"
+              rel="noopener"
+              >Source</a
+            >
+          </div>
+          <div class="footer-col">
+            <p class="footer-label">Legal</p>
+            <a href="/terms">Terms of Service</a>
+            <a href="/privacy">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <span>© 2026 Synapse</span>
+      </div>
+    </footer>
+  </body>
 </html>

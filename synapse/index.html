@@ -1,179 +1,401 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Synapse</title>
-<meta name="description" content="Synapse is a Discord staff bot. Keep the community loud and the staff room quiet, in two servers or one.">
-<meta name="theme-color" content="#0f1038">
-<link rel="icon" href="/logo.png">
-<meta property="og:title" content="Synapse">
-<meta property="og:description" content="A Discord staff bot that connects a public community to a private staff server.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://synapse.landonprojects.com">
-<meta property="og:image" content="https://synapse.landonprojects.com/logo.png">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Synapse">
-<meta name="twitter:description" content="A Discord staff bot that connects a public community to a private staff server.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/site.css">
-</head>
-<body class="home">
-<div class="cursor-glow" hidden></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Synapse — Hub-and-Spoke Discord staff bot</title>
+    <meta
+      name="description"
+      content="Synapse is a Hub-and-Spoke Discord staff bot with tickets. Keep the community loud and the staff room quiet, in two servers or one."
+    />
+    <meta name="theme-color" content="#0f1038" />
+    <link rel="icon" href="/logo.png" />
+    <meta property="og:title" content="Synapse — Hub-and-Spoke Discord staff bot" />
+    <meta
+      property="og:description"
+      content="A Hub-and-Spoke Discord staff bot with tickets. Connect a public community to a private staff server, or run both in one."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://synapse.landonprojects.com" />
+    <meta
+      property="og:image"
+      content="https://synapse.landonprojects.com/og.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Synapse — Hub-and-Spoke Discord staff bot" />
+    <meta
+      name="twitter:description"
+      content="A Hub-and-Spoke Discord staff bot with tickets. Connect a public community to a private staff server, or run both in one."
+    />
+    <meta
+      name="twitter:image"
+      content="https://synapse.landonprojects.com/og.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/site.css" />
+  </head>
+  <body class="home">
+    <div class="cursor-glow" hidden></div>
 
-<header class="nav-shell">
-  <div class="nav-pill">
-    <a class="brand" href="/" aria-current="page"><span class="brand-mark"><img src="/logo.png" alt="" width="34" height="34"></span><span class="brand-name">Synapse</span></a>
-    <nav class="topnav" aria-label="Primary">
-      <a href="/" aria-current="page">Home</a>
-      <a href="/terms">Terms</a>
-      <a href="/privacy">Privacy</a>
-      <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Support</a>
-    </nav>
-    <a class="button nav-cta" href="https://discord.com/oauth2/authorize?client_id=1551712324245524562&amp;permissions=268520448&amp;scope=bot%20applications.commands" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"/></svg><span class="cta-long">Add to Discord</span><span class="cta-short">Add</span></a>
-  </div>
-</header>
-
-<main class="wrap">
-  <section class="hero">
-    <div>
-      <p class="eyebrow">Discord staff bot</p>
-      <h1>Keep the community loud.<span>Keep the staff room quiet.</span></h1>
-      <p class="lede">Synapse sits between them. A public server can stay public. Staff work can happen somewhere private. One server can do both.</p>
-      <div class="actions">
-        <a class="button" href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Join the support server</a>
+    <header class="nav-shell">
+      <div class="nav-pill">
+        <a class="brand" href="/" aria-current="page"
+          ><span class="brand-mark"
+            ><img src="/logo.png" alt="" width="34" height="34" /></span
+          ><span class="brand-name">Synapse</span></a
+        >
+        <nav class="topnav" aria-label="Primary">
+          <a href="/" aria-current="page">Home</a>
+          <a href="/terms">Terms</a>
+          <a href="/privacy">Privacy</a>
+          <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener"
+            >Support</a
+          >
+        </nav>
+        <a
+          class="button nav-cta"
+          href="https://discord.com/oauth2/authorize?client_id=1551712324245524562&amp;permissions=395942415360&amp;scope=bot%20applications.commands"
+          target="_blank"
+          rel="noopener"
+          ><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"
+            /></svg
+          ><span class="cta-long">Add to Discord</span
+          ><span class="cta-short">Add</span></a
+        >
       </div>
-    </div>
-    <div class="mark-stage">
-      <div class="hero-mark-clip">
-        <img class="hero-mark" src="/logo.png" alt="Synapse logo, a cyan striped S on navy">
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Discord staff bot</p>
+          <h1>
+            Keep the community loud.<span>Keep the staff room quiet.</span>
+          </h1>
+          <p class="lede">
+            Synapse sits between them. A public server can stay public. Staff
+            work can happen somewhere private. One server can do both.
+          </p>
+          <div class="actions">
+            <a
+              class="button"
+              href="https://discord.com/oauth2/authorize?client_id=1551712324245524562&amp;permissions=395942415360&amp;scope=bot%20applications.commands"
+              target="_blank"
+              rel="noopener"
+              >Add to Discord</a
+            >
+            <a
+              class="ghost"
+              href="https://discord.gg/VJcacfEuyE"
+              target="_blank"
+              rel="noopener"
+              >Join the support server</a
+            >
+          </div>
+          <div class="status-strip" aria-live="polite">
+            <span class="status-label">Bot status</span>
+            <span class="status-pill is-checking" id="status-pill">Checking</span>
+            <span class="status-checked" id="status-checked" hidden></span>
+          </div>
+        </div>
+        <div class="mark-stage">
+          <div class="hero-mark-clip">
+            <img
+              class="hero-mark"
+              src="/logo.png"
+              alt="Synapse logo, a cyan striped S on navy"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="bridge" aria-label="Hub and Spoke">
+        <article class="station">
+          <p class="eyebrow">Spoke</p>
+          <h2>Community</h2>
+          <p>
+            The public server. Members stay here. Staff traffic leaves for the
+            Hub.
+          </p>
+        </article>
+        <div class="bus" aria-hidden="true">
+          <span class="bus-track"></span>
+          <span class="bus-tag">Signal</span>
+        </div>
+        <article class="station">
+          <p class="eyebrow">Hub</p>
+          <h2>Staff</h2>
+          <p>
+            The private server. Triage lands here, and staff decisions go back
+            to the Spoke.
+          </p>
+        </article>
+      </section>
+
+      <div class="split">
+        <article class="solo">
+          <p class="eyebrow">Standalone</p>
+          <h2>One server is enough.</h2>
+          <p>
+            The same bot, both jobs. The triage channel stays hidden from
+            everyone else.
+          </p>
+        </article>
+        <div class="codeboard">
+          <p class="eyebrow">Link code</p>
+          <p class="code" id="code" aria-live="polite">K4N8QP</p>
+          <button class="ghost" type="button" id="rotate">Rotate</button>
+          <p class="hint">
+            A Hub mints a real 6-character code in /setup. Rotating it leaves
+            current Spokes connected. This one is just for show.
+          </p>
+        </div>
       </div>
-    </div>
-  </section>
 
-  <section class="bridge" aria-label="Hub and Spoke">
-    <article class="station">
-      <p class="eyebrow">Spoke</p>
-      <h2>Community</h2>
-      <p>The public server. Members stay here. Staff traffic leaves for the Hub.</p>
-    </article>
-    <div class="bus" aria-hidden="true">
-      <span class="bus-track"></span>
-      <span class="bus-tag">Signal</span>
-    </div>
-    <article class="station">
-      <p class="eyebrow">Hub</p>
-      <h2>Staff</h2>
-      <p>The private server. Triage lands here, and staff decisions go back to the Spoke.</p>
-    </article>
-  </section>
+      <section class="starts">
+        <h2>How it starts</h2>
+        <div class="step-grid">
+          <article class="step">
+            <p class="eyebrow">Step 1</p>
+            <h3>/setup</h3>
+            <p>Initialize a Hub and choose the triage channel.</p>
+          </article>
+          <article class="step">
+            <p class="eyebrow">Step 2</p>
+            <h3>Link a Spoke</h3>
+            <p>The Spoke enters the link code. The Hub approves the request.</p>
+          </article>
+          <article class="step">
+            <p class="eyebrow">Step 3</p>
+            <h3>/settings</h3>
+            <p>Place the ticket panel and tune logs, ranks, and alerts.</p>
+          </article>
+        </div>
+      </section>
 
-  <div class="split">
-    <article class="solo">
-      <p class="eyebrow">Standalone</p>
-      <h2>One server is enough.</h2>
-      <p>The same bot, both jobs. The triage channel stays hidden from everyone else.</p>
-    </article>
-    <div class="codeboard">
-      <p class="eyebrow">Link code</p>
-      <p class="code" id="code" aria-live="polite">K4N8QP</p>
-      <button class="ghost" type="button" id="rotate">Rotate</button>
-      <p class="hint">A Hub mints a real 6-character code in /setup. Rotating it leaves current Spokes connected. This one is just for show.</p>
-    </div>
-  </div>
+      <section class="tools">
+        <h2>On the staff side</h2>
+        <div class="tool-grid">
+          <article class="tool">
+            <h3>Ranks</h3>
+            <p>
+              A rank is a named position tied to a Discord role, with its own
+              level. A lower level cannot act on a higher one.
+            </p>
+          </article>
+          <article class="tool">
+            <h3>Hire and fire</h3>
+            <p>
+              Hiring opens a staff profile, gives the rank, and grants the
+              primary staff role. Firing takes them back.
+            </p>
+          </article>
+          <article class="tool">
+            <h3>Leave</h3>
+            <p>
+              Hired staff request leave with a reason and dates. Someone with
+              leave approval can approve, deny, or end it.
+            </p>
+          </article>
+          <article class="tool">
+            <h3>Tickets</h3>
+            <p>
+              Members open a private thread from a panel. A linked Hub gets a
+              matching triage thread, and messages typed on either side are
+              mirrored. Claim, notes, close, and transcripts stay with staff.
+            </p>
+          </article>
+          <article class="tool">
+            <h3>Strikes</h3>
+            <p>
+              Ranks that can issue strikes can view a hired member’s record, add
+              a strike with a reason, or remove an active one. The change posts
+              to the discipline log.
+            </p>
+          </article>
+          <article class="tool">
+            <h3>Logs and settings</h3>
+            <p>
+              Per-kind log channels, ranks, the ticket panel, auto-close, and an
+              alert role all live in /settings.
+            </p>
+          </article>
+        </div>
+      </section>
 
-  <section class="tools">
-    <h2>On the staff side</h2>
-    <div class="tool-grid">
-      <article class="tool">
-        <h3>Ranks</h3>
-        <p>A rank is a named position tied to a Discord role, with its own level. A lower level cannot act on a higher one.</p>
-      </article>
-      <article class="tool">
-        <h3>Hire and fire</h3>
-        <p>Hiring opens a staff profile, gives the rank, and grants the primary staff role. Firing takes them back.</p>
-      </article>
-      <article class="tool">
-        <h3>Leave</h3>
-        <p>Hired staff request leave with a reason and dates. Someone with leave approval can approve, deny, or end it.</p>
-      </article>
-    </div>
-  </section>
+      <section class="quiet">
+        <h2>What it hears</h2>
+        <div class="chips">
+          <span><i>/</i>setup</span>
+          <span><i>/</i>staff hire</span>
+          <span><i>/</i>loa request</span>
+          <span><i>/</i>ticket claim</span>
+          <span><i>/</i>ticket summary</span>
+        </div>
+        <p>
+          Setup, staff, leave, and settings stay on slash commands, buttons, and
+          forms. Message content is read only inside open ticket threads so
+          those conversations can be mirrored. Other channels stay unread.
+        </p>
+      </section>
+    </main>
 
-  <section class="quiet">
-    <h2>What it hears</h2>
-    <div class="chips">
-      <span><i>/</i>setup</span>
-      <span><i>/</i>staff hire</span>
-      <span><i>/</i>staff fire</span>
-      <span><i>/</i>loa request</span>
-    </div>
-    <p>Commands, buttons, and forms. That is the whole interface. Ordinary channel messages stay unread.</p>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a class="brand" href="/"><span class="brand-mark"><img src="/logo.png" alt="" width="34" height="34"></span><span class="brand-name">Synapse</span></a>
-      <p>A staff bot for Discord. One server is enough. A separate staff server works when the community and the staff should stay apart.</p>
-      <a class="social" href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener" aria-label="Synapse support server on Discord"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"/></svg></a>
-    </div>
-    <div class="footer-links">
-      <div class="footer-col">
-        <p class="footer-label">Resources</p>
-        <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener">Support Server</a>
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="/"
+            ><span class="brand-mark"
+              ><img src="/logo.png" alt="" width="34" height="34" /></span
+            ><span class="brand-name">Synapse</span></a
+          >
+          <p>
+            A staff bot for Discord. One server is enough. A separate staff
+            server works when the community and the staff should stay apart.
+          </p>
+          <a
+            class="social"
+            href="https://discord.gg/VJcacfEuyE"
+            target="_blank"
+            rel="noopener"
+            aria-label="Synapse support server on Discord"
+            ><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"
+              /></svg
+          ></a>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <p class="footer-label">Resources</p>
+            <a
+              href="https://discord.gg/VJcacfEuyE"
+              target="_blank"
+              rel="noopener"
+              >Support Server</a
+            >
+            <a
+              href="https://github.com/Gameswithlandon/synapse"
+              target="_blank"
+              rel="noopener"
+              >Source</a
+            >
+          </div>
+          <div class="footer-col">
+            <p class="footer-label">Legal</p>
+            <a href="/terms">Terms of Service</a>
+            <a href="/privacy">Privacy Policy</a>
+          </div>
+        </div>
       </div>
-      <div class="footer-col">
-        <p class="footer-label">Legal</p>
-        <a href="/terms">Terms of Service</a>
-        <a href="/privacy">Privacy Policy</a>
+      <div class="footer-bar">
+        <span>© 2026 Synapse</span>
       </div>
-    </div>
-  </div>
-  <div class="footer-bar">
-    <span>© 2026 Synapse</span>
-  </div>
-</footer>
+    </footer>
 
-<script>
-  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  const code = document.getElementById("code");
-  const rotate = document.getElementById("rotate");
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    <script>
+      const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      const code = document.getElementById("code");
+      const rotate = document.getElementById("rotate");
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
 
-  function makeCode() {
-    let next = "";
-    for (let i = 0; i < 6; i += 1) {
-      next += alphabet[Math.floor(Math.random() * alphabet.length)];
-    }
-    return next;
-  }
+      function makeCode() {
+        let next = "";
+        for (let i = 0; i < 6; i += 1) {
+          next += alphabet[Math.floor(Math.random() * alphabet.length)];
+        }
+        return next;
+      }
 
-  rotate.addEventListener("click", () => {
-    if (reduceMotion) {
-      code.textContent = makeCode();
-      return;
-    }
-    let frame = 0;
-    const timer = setInterval(() => {
-      code.textContent = makeCode();
-      frame += 1;
-      if (frame > 8) clearInterval(timer);
-    }, 36);
-  });
+      rotate.addEventListener("click", () => {
+        if (reduceMotion) {
+          code.textContent = makeCode();
+          return;
+        }
+        let frame = 0;
+        const timer = setInterval(() => {
+          code.textContent = makeCode();
+          frame += 1;
+          if (frame > 8) clearInterval(timer);
+        }, 36);
+      });
 
-  const glow = document.querySelector(".cursor-glow");
-  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  if (glow && finePointer && !reduceMotion) {
-    glow.hidden = false;
-    window.addEventListener("pointermove", (event) => {
-      glow.style.transform = "translate(" + event.clientX + "px, " + event.clientY + "px)";
-    });
-  }
-</script>
-</body>
+      const glow = document.querySelector(".cursor-glow");
+      const finePointer = window.matchMedia(
+        "(hover: hover) and (pointer: fine)",
+      ).matches;
+      if (glow && finePointer && !reduceMotion) {
+        glow.hidden = false;
+        window.addEventListener("pointermove", (event) => {
+          glow.style.transform =
+            "translate(" + event.clientX + "px, " + event.clientY + "px)";
+        });
+      }
+
+      const statusPill = document.getElementById("status-pill");
+      const statusChecked = document.getElementById("status-checked");
+      const statusMap = {
+        up: { label: "Online", className: "is-online" },
+        down: { label: "Offline", className: "is-offline" },
+        unknown: { label: "Unknown", className: "is-unknown" },
+        degraded: { label: "Degraded", className: "is-degraded" },
+      };
+
+      function formatCheckedAt(value) {
+        if (!value) return "";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "";
+        return (
+          "Checked " +
+          date.toLocaleString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hourCycle: "h23",
+            month: "short",
+            day: "numeric",
+          })
+        );
+      }
+
+      function setStatus(state, checkedAt) {
+        const next = statusMap[state] || statusMap.unknown;
+        statusPill.textContent = next.label;
+        statusPill.className = "status-pill " + next.className;
+        const stamp = formatCheckedAt(checkedAt);
+        if (stamp) {
+          statusChecked.hidden = false;
+          statusChecked.textContent = stamp;
+        } else {
+          statusChecked.hidden = true;
+          statusChecked.textContent = "";
+        }
+      }
+
+      async function refreshStatus() {
+        try {
+          const response = await fetch("/api/synapse-status", {
+            headers: { Accept: "application/json" },
+          });
+          if (!response.ok) throw new Error("bad status");
+          const data = await response.json();
+          setStatus(data.status, data.checkedAt || data.lastPing);
+        } catch (error) {
+          setStatus("unknown", new Date().toISOString());
+        }
+      }
+
+      refreshStatus();
+      setInterval(refreshStatus, 60000);
+    </script>
+  </body>
 </html>

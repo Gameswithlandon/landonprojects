@@ -44,12 +44,17 @@ const SYNAPSE_PAGES = {
   '/terms': '/synapse/terms',
   '/privacy': '/synapse/privacy',
   '/logo.png': '/synapse/logo.png',
+  '/og.png': '/synapse/og.png',
   '/site.css': '/synapse/site.css',
   '/terms.pdf': '/synapse/terms.pdf',
   '/privacy.pdf': '/synapse/privacy.pdf',
 };
 
 async function synapseResponse(request, env, url) {
+  if (url.pathname === '/api/synapse-status') {
+    return handleSynapseStatus(env);
+  }
+
   const page = SYNAPSE_PAGES[url.pathname] || null;
 
   if (!page) {
@@ -84,6 +89,39 @@ function withSecurityHeaders(response) {
     statusText: response.statusText,
     headers,
   });
+}
+
+function mapSynapseHcStatus(hcStatus) {
+  if (hcStatus === 'up') return 'up';
+  if (hcStatus === 'down' || hcStatus === 'grace') return 'down';
+  return 'unknown';
+}
+
+async function handleSynapseStatus(env) {
+  const checkedAt = new Date().toISOString();
+  const uuid = env.SYNAPSE_HC_UUID || env.HC_SYNAPSE_UUID;
+  const apiKey = env.HC_API_KEY;
+
+  if (!apiKey || !uuid) {
+    return json({ status: 'unknown', lastPing: null, checkedAt });
+  }
+
+  try {
+    const res = await fetch(`https://healthchecks.io/api/v3/checks/${uuid}`, {
+      headers: { 'X-Api-Key': apiKey },
+    });
+    if (!res.ok) {
+      return json({ status: 'unknown', lastPing: null, checkedAt });
+    }
+    const check = await res.json();
+    return json({
+      status: mapSynapseHcStatus(check.status),
+      lastPing: check.last_ping || null,
+      checkedAt,
+    });
+  } catch {
+    return json({ status: 'unknown', lastPing: null, checkedAt });
+  }
 }
 
 async function handleUptime(env) {
