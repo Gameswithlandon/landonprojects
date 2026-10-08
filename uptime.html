@@ -161,19 +161,6 @@
     border-top: 1px dashed var(--border);
   }
 
-  .uptime-graph-meta {
-    display: flex;
-    justify-content: space-between;
-    gap: 0.75rem;
-    margin: 0 0 0.55rem;
-    color: var(--muted);
-    font-size: 0.72rem;
-  }
-
-  .uptime-graph-meta.is-active .uptime-hover {
-    color: var(--text);
-  }
-
   .uptime-plot {
     position: relative;
   }
@@ -406,10 +393,6 @@
         </div>
       </div>
       <div class="uptime-graph" aria-label="tv-home-server 30-day uptime">
-        <div class="uptime-graph-meta" id="tv-meta">
-          <span>last 30 days</span>
-          <span class="uptime-hover" id="tv-hover">hover a day</span>
-        </div>
         <div class="uptime-plot">
           <div class="uptime-bars" id="tv-bars"></div>
           <div class="uptime-tip" id="tv-tip" hidden></div>
@@ -435,10 +418,6 @@
         </div>
       </div>
       <div class="uptime-graph" aria-label="gaming-home-server 30-day uptime">
-        <div class="uptime-graph-meta" id="gaming-meta">
-          <span>last 30 days</span>
-          <span class="uptime-hover" id="gaming-hover">hover a day</span>
-        </div>
         <div class="uptime-plot">
           <div class="uptime-bars" id="gaming-bars"></div>
           <div class="uptime-tip" id="gaming-tip" hidden></div>
@@ -491,8 +470,6 @@
   function hideTip(key) {
     const root = document.getElementById(key + '-bars');
     const tip = document.getElementById(key + '-tip');
-    const hover = document.getElementById(key + '-hover');
-    const meta = document.getElementById(key + '-meta');
     if (!root || !tip) return;
     tip.hidden = true;
     tip.classList.remove('is-visible');
@@ -500,23 +477,17 @@
     root.querySelectorAll('.uptime-bar.is-active').forEach(function (bar) {
       bar.classList.remove('is-active');
     });
-    if (hover) hover.textContent = 'hover a day';
-    if (meta) meta.classList.remove('is-active');
   }
 
   function showTip(key, bar, day) {
     const root = document.getElementById(key + '-bars');
     const tip = document.getElementById(key + '-tip');
-    const hover = document.getElementById(key + '-hover');
-    const meta = document.getElementById(key + '-meta');
     const plot = tip.parentElement;
     const value = day && typeof day.uptime === 'number' ? day.uptime : null;
     const label = dayLabel(day && day.date);
     const detail = value == null ? 'no data' : value.toFixed(2) + '%';
 
     tip.innerHTML = '<strong>' + label + '</strong>' + detail;
-    if (hover) hover.textContent = label + ' · ' + detail;
-    if (meta) meta.classList.add('is-active');
     root.classList.add('is-dimming');
     root.querySelectorAll('.uptime-bar.is-active').forEach(function (el) {
       el.classList.remove('is-active');
