@@ -43,6 +43,8 @@ const SYNAPSE_PAGES = {
   '/index.html': '/synapse/',
   '/terms': '/synapse/terms',
   '/privacy': '/synapse/privacy',
+  '/status': '/synapse/status.html',
+  '/status.html': '/synapse/status.html',
   '/logo.png': '/synapse/logo.png',
   '/og.png': '/synapse/og.png',
   '/site.css': '/synapse/site.css',
@@ -107,33 +109,50 @@ async function handleSynapseStatus(env) {
       status: 'unknown',
       lastPing: null,
       checkedAt,
+      uptime30d: null,
       reason: !apiKey ? 'missing_key' : 'missing_uuid',
     });
   }
 
   try {
-    const res = await fetch(`https://healthchecks.io/api/v3/checks/${uuid}`, {
-      headers: { 'X-Api-Key': apiKey },
-    });
+    const now = Math.floor(Date.now() / 1000);
+    const start = now - WINDOW_SECONDS;
+    const headers = { 'X-Api-Key': apiKey };
+    const [res, flipsRes] = await Promise.all([
+      fetch(`https://healthchecks.io/api/v3/checks/${uuid}`, { headers }),
+      fetch(
+        `https://healthchecks.io/api/v3/checks/${uuid}/flips/?start=${start}`,
+        { headers },
+      ),
+    ]);
     if (!res.ok) {
       return json({
         status: 'unknown',
         lastPing: null,
         checkedAt,
+        uptime30d: null,
         reason: `hc_${res.status}`,
       });
     }
     const check = await res.json();
+    let uptime30d = null;
+    if (flipsRes.ok) {
+      const flips = await flipsRes.json();
+      uptime30d = computeUptime(flips, start, now, check.status);
+    }
     return json({
       status: mapSynapseHcStatus(check.status),
+      name: check.name || 'Synapse',
       lastPing: check.last_ping || null,
       checkedAt,
+      uptime30d,
     });
   } catch {
     return json({
       status: 'unknown',
       lastPing: null,
       checkedAt,
+      uptime30d: null,
       reason: 'fetch_failed',
     });
   }

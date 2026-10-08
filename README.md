@@ -29,9 +29,10 @@ check's status-change history. Served on `landonprojects.com`.
 
 ## `/api/synapse-status`
 
-Served on `synapse.landonprojects.com`. Returns bot Online/Offline for the
-Synapse homepage: `{ status, lastPing, checkedAt }` where `status` is
+Served on `synapse.landonprojects.com`. Powers the homepage status strip and
+`/status` page: `{ status, lastPing, checkedAt, uptime30d }` where `status` is
 `up` | `down` | `unknown`. Missing secrets return `unknown` with HTTP 200.
+The public status page is `https://synapse.landonprojects.com/status`.
 
 Requires secrets in the Cloudflare dashboard under
 **Workers & Pages > landonprojects > Settings > Variables and Secrets**:

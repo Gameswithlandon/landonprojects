@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Status — Synapse</title>
+    <meta
+      name="description"
+      content="Live status and 30-day uptime for the Synapse Discord bot."
+    />
+    <meta name="theme-color" content="#0f1038" />
+    <link rel="icon" href="/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/site.css" />
+  </head>
+  <body class="doc status-page">
+    <header class="nav-shell">
+      <div class="nav-pill">
+        <a class="brand" href="/"
+          ><span class="brand-mark"
+            ><img src="/logo.png" alt="" width="34" height="34" /></span
+          ><span class="brand-name">Synapse</span></a
+        >
+        <nav class="topnav" aria-label="Primary">
+          <a href="/">Home</a>
+          <a href="/status" aria-current="page">Status</a>
+          <a href="/terms">Terms</a>
+          <a href="/privacy">Privacy</a>
+          <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener"
+            >Support</a
+          >
+        </nav>
+        <a
+          class="button nav-cta"
+          href="https://discord.com/oauth2/authorize?client_id=1551712324245524562&amp;permissions=395942415360&amp;scope=bot%20applications.commands"
+          target="_blank"
+          rel="noopener"
+          ><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.1.05c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.74 0c-.14-.34-.36-.76-.54-1.09a.1.1 0 0 0-.1-.05c-1.5.26-2.94.71-4.27 1.33a.09.09 0 0 0-.04.03C2.1 9.05 1.35 12.65 1.72 16.2c0 .03.02.05.04.06 1.8 1.32 3.53 2.12 5.24 2.65.04 0 .08 0 .1-.04.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.32-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.22.17.33.26.03.03.03.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.32.61.68 1.19 1.07 1.74.03.04.07.04.1.03 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.04.04-.06.44-4.12-.73-7.68-3.1-10.84a.08.08 0 0 0-.04-.03ZM8.52 14.1c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12Zm6.97 0c-1.03 0-1.89-.95-1.89-2.12 0-1.17.84-2.12 1.89-2.12 1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12Z"
+            /></svg
+          ><span class="cta-long">Add to Discord</span
+          ><span class="cta-short">Add</span></a
+        >
+      </div>
+    </header>
+
+    <div class="wrap read">
+      <p class="eyebrow">Operations</p>
+      <h1>System status</h1>
+      <p class="lede status-lede">
+        Live signal for the official Synapse Discord bot. Refreshes every minute.
+      </p>
+
+      <div class="status-banner is-checking" id="status-banner" aria-live="polite">
+        <span class="status-pill is-checking" id="banner-pill">Checking</span>
+        <p class="status-banner-copy" id="banner-copy">Loading current status…</p>
+      </div>
+
+      <article class="status-card">
+        <div class="status-card-top">
+          <div>
+            <p class="eyebrow">Service</p>
+            <h2>Synapse Discord bot</h2>
+            <p class="status-card-desc">
+              Slash commands, tickets, staff tools, and Hub-and-Spoke routing for
+              the hosted bot.
+            </p>
+          </div>
+          <span class="status-pill is-checking" id="service-pill">Checking</span>
+        </div>
+        <dl class="status-metrics">
+          <div>
+            <dt>Last ping</dt>
+            <dd id="metric-ping">—</dd>
+          </div>
+          <div>
+            <dt>30-day uptime</dt>
+            <dd id="metric-uptime">—</dd>
+          </div>
+          <div>
+            <dt>Last checked</dt>
+            <dd id="metric-checked">—</dd>
+          </div>
+        </dl>
+      </article>
+
+      <p class="status-note">
+        Status comes from Healthchecks.io heartbeats the bot sends while it is
+        running. Brief restarts can show as short dips. For help, join the
+        <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener"
+          >support server</a
+        >.
+      </p>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="/"
+            ><span class="brand-mark"
+              ><img src="/logo.png" alt="" width="34" height="34" /></span
+            ><span class="brand-name">Synapse</span></a
+          >
+          <p>
+            A staff bot for Discord. One server is enough. A separate staff
+            server works when the community and the staff should stay apart.
+          </p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <p class="footer-label">Resources</p>
+            <a href="/status">Status</a>
+            <a
+              href="https://discord.gg/VJcacfEuyE"
+              target="_blank"
+              rel="noopener"
+              >Support Server</a
+            >
+            <a
+              href="https://github.com/Gameswithlandon/synapse"
+              target="_blank"
+              rel="noopener"
+              >Source</a
+            >
+          </div>
+          <div class="footer-col">
+            <p class="footer-label">Legal</p>
+            <a href="/terms">Terms of Service</a>
+            <a href="/privacy">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <span>© 2026 Synapse</span>
+      </div>
+    </footer>
+
+    <script>
+      const banner = document.getElementById("status-banner");
+      const bannerPill = document.getElementById("banner-pill");
+      const bannerCopy = document.getElementById("banner-copy");
+      const servicePill = document.getElementById("service-pill");
+      const metricPing = document.getElementById("metric-ping");
+      const metricUptime = document.getElementById("metric-uptime");
+      const metricChecked = document.getElementById("metric-checked");
+
+      const states = {
+        up: {
+          label: "Online",
+          className: "is-online",
+          banner: "is-online",
+          copy: "All systems operational.",
+        },
+        down: {
+          label: "Offline",
+          className: "is-offline",
+          banner: "is-offline",
+          copy: "Synapse is not responding to heartbeats right now.",
+        },
+        unknown: {
+          label: "Unknown",
+          className: "is-unknown",
+          banner: "is-unknown",
+          copy: "Status could not be confirmed yet.",
+        },
+        degraded: {
+          label: "Degraded",
+          className: "is-degraded",
+          banner: "is-degraded",
+          copy: "Synapse may be recovering from a missed heartbeat.",
+        },
+      };
+
+      function stamp(value) {
+        if (!value) return "—";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "—";
+        return date.toLocaleString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hourCycle: "h23",
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        });
+      }
+
+      function uptimeText(value) {
+        if (typeof value !== "number" || Number.isNaN(value)) return "—";
+        return value.toFixed(value >= 99.95 ? 2 : 1) + "%";
+      }
+
+      function apply(data) {
+        const state = states[data.status] || states.unknown;
+        banner.className = "status-banner " + state.banner;
+        bannerPill.className = "status-pill " + state.className;
+        bannerPill.textContent = state.label;
+        bannerCopy.textContent = state.copy;
+        servicePill.className = "status-pill " + state.className;
+        servicePill.textContent = state.label;
+        metricPing.textContent = stamp(data.lastPing);
+        metricUptime.textContent = uptimeText(data.uptime30d);
+        metricChecked.textContent = stamp(data.checkedAt);
+      }
+
+      async function refresh() {
+        try {
+          const response = await fetch("/api/synapse-status", {
+            headers: { Accept: "application/json" },
+          });
+          if (!response.ok) throw new Error("bad status");
+          apply(await response.json());
+        } catch (error) {
+          apply({
+            status: "unknown",
+            lastPing: null,
+            checkedAt: new Date().toISOString(),
+            uptime30d: null,
+          });
+        }
+      }
+
+      refresh();
+      setInterval(refresh, 60000);
+    </script>
+  </body>
+</html>

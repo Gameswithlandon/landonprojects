@@ -51,6 +51,7 @@
         >
         <nav class="topnav" aria-label="Primary">
           <a href="/" aria-current="page">Home</a>
+          <a href="/status">Status</a>
           <a href="/terms">Terms</a>
           <a href="/privacy">Privacy</a>
           <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener"
@@ -100,11 +101,11 @@
               >Join the support server</a
             >
           </div>
-          <div class="status-strip" aria-live="polite">
+          <a class="status-strip" href="/status" aria-live="polite">
             <span class="status-label">Bot status</span>
             <span class="status-pill is-checking" id="status-pill">Checking</span>
             <span class="status-checked" id="status-checked" hidden></span>
-          </div>
+          </a>
         </div>
         <div class="mark-stage">
           <div class="hero-mark-clip">
@@ -276,6 +277,8 @@
         <div class="footer-links">
           <div class="footer-col">
             <p class="footer-label">Resources</p>
+            
+            <a href="/status">Status</a>
             <a
               href="https://discord.gg/VJcacfEuyE"
               target="_blank"
