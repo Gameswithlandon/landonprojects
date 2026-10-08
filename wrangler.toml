@@ -2,6 +2,9 @@ name = "landonprojects"
 main = "worker.js"
 compatibility_date = "2026-09-01"
 
+[vars]
+SYNAPSE_HC_UUID = "6ae738f2-abef-4420-a8c2-05d99d47ebca"
+
 [assets]
 directory = "./"
 binding = "ASSETS"
