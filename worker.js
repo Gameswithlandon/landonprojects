@@ -103,7 +103,12 @@ async function handleSynapseStatus(env) {
   const apiKey = env.HC_API_KEY;
 
   if (!apiKey || !uuid) {
-    return json({ status: 'unknown', lastPing: null, checkedAt });
+    return json({
+      status: 'unknown',
+      lastPing: null,
+      checkedAt,
+      reason: !apiKey ? 'missing_key' : 'missing_uuid',
+    });
   }
 
   try {
@@ -111,7 +116,12 @@ async function handleSynapseStatus(env) {
       headers: { 'X-Api-Key': apiKey },
     });
     if (!res.ok) {
-      return json({ status: 'unknown', lastPing: null, checkedAt });
+      return json({
+        status: 'unknown',
+        lastPing: null,
+        checkedAt,
+        reason: `hc_${res.status}`,
+      });
     }
     const check = await res.json();
     return json({
@@ -120,7 +130,12 @@ async function handleSynapseStatus(env) {
       checkedAt,
     });
   } catch {
-    return json({ status: 'unknown', lastPing: null, checkedAt });
+    return json({
+      status: 'unknown',
+      lastPing: null,
+      checkedAt,
+      reason: 'fetch_failed',
+    });
   }
 }
 
