@@ -1,6 +1,14 @@
 const CHECKS = [
-  { key: 'tv', uuid: '2ed68968-3302-44ac-92a2-bbc9772bfd7b', label: 'tv-home-server' },
-  { key: 'gaming', uuid: 'cce31621-3da3-4507-acb1-0abac53458ca', label: 'gaming-home-server' },
+  {
+    key: "tv",
+    uuid: "2ed68968-3302-44ac-92a2-bbc9772bfd7b",
+    label: "tv-home-server",
+  },
+  {
+    key: "gaming",
+    uuid: "cce31621-3da3-4507-acb1-0abac53458ca",
+    label: "gaming-home-server",
+  },
 ];
 
 const WINDOW_SECONDS = 30 * 24 * 3600; // 30 days
@@ -16,22 +24,22 @@ const CSP = [
   "object-src 'none'",
   "base-uri 'self'",
   "frame-ancestors 'none'",
-].join('; ');
+].join("; ");
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    if (url.hostname === 'synapse.landonprojects.com') {
+    if (url.hostname === "synapse.landonprojects.com") {
       return withSecurityHeaders(await synapseResponse(request, env, url));
     }
 
-    if (url.pathname === '/synapse' || url.pathname.startsWith('/synapse/')) {
+    if (url.pathname === "/synapse" || url.pathname.startsWith("/synapse/")) {
       return withSecurityHeaders(await notFound(request, env));
     }
 
     const response =
-      url.pathname === '/api/uptime'
+      url.pathname === "/api/uptime"
         ? await handleUptime(env)
         : await env.ASSETS.fetch(request);
 
@@ -40,28 +48,28 @@ export default {
 };
 
 const SYNAPSE_PAGES = {
-  '/': '/synapse/',
-  '/index.html': '/synapse/',
-  '/terms': '/synapse/terms',
-  '/privacy': '/synapse/privacy',
-  '/status': '/synapse/status',
-  '/status.html': '/synapse/status',
-  '/logo.png': '/synapse/logo.png',
-  '/og.png': '/synapse/og.png',
-  '/site.css': '/synapse/site.css',
-  '/terms.pdf': '/synapse/terms.pdf',
-  '/privacy.pdf': '/synapse/privacy.pdf',
+  "/": "/synapse/",
+  "/index.html": "/synapse/",
+  "/terms": "/synapse/terms",
+  "/privacy": "/synapse/privacy",
+  "/status": "/synapse/status",
+  "/status.html": "/synapse/status",
+  "/logo.png": "/synapse/logo.png",
+  "/og.png": "/synapse/og.png",
+  "/site.css": "/synapse/site.css",
+  "/terms.pdf": "/synapse/terms.pdf",
+  "/privacy.pdf": "/synapse/privacy.pdf",
 };
 
 async function synapseResponse(request, env, url) {
-  if (url.pathname === '/api/synapse-status') {
+  if (url.pathname === "/api/synapse-status") {
     return handleSynapseStatus(env);
   }
 
   const page = SYNAPSE_PAGES[url.pathname] || null;
 
   if (!page) {
-    return notFound(request, env, '/synapse/404');
+    return notFound(request, env, "/synapse/404");
   }
 
   const assetUrl = new URL(request.url);
@@ -69,24 +77,24 @@ async function synapseResponse(request, env, url) {
   return env.ASSETS.fetch(new Request(assetUrl, request));
 }
 
-async function notFound(request, env, pathname = '/404') {
+async function notFound(request, env, pathname = "/404") {
   const notFoundUrl = new URL(request.url);
   notFoundUrl.pathname = pathname;
   const page = await env.ASSETS.fetch(new Request(notFoundUrl, request));
   return new Response(page.body, {
     status: 404,
-    statusText: 'Not Found',
+    statusText: "Not Found",
     headers: page.headers,
   });
 }
 
 function withSecurityHeaders(response) {
   const headers = new Headers(response.headers);
-  headers.set('Content-Security-Policy', CSP);
-  headers.set('X-Content-Type-Options', 'nosniff');
-  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  headers.set('X-Frame-Options', 'DENY');
-  headers.set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+  headers.set("Content-Security-Policy", CSP);
+  headers.set("X-Content-Type-Options", "nosniff");
+  headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  headers.set("X-Frame-Options", "DENY");
+  headers.set("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,
@@ -95,9 +103,9 @@ function withSecurityHeaders(response) {
 }
 
 function mapSynapseHcStatus(hcStatus) {
-  if (hcStatus === 'up') return 'up';
-  if (hcStatus === 'down' || hcStatus === 'grace') return 'down';
-  return 'unknown';
+  if (hcStatus === "up") return "up";
+  if (hcStatus === "down" || hcStatus === "grace") return "down";
+  return "unknown";
 }
 
 async function handleSynapseStatus(env) {
@@ -107,18 +115,18 @@ async function handleSynapseStatus(env) {
 
   if (!apiKey || !uuid) {
     return json({
-      status: 'unknown',
+      status: "unknown",
       lastPing: null,
       checkedAt,
       uptime30d: null,
       days: [],
       hcLatencyMs: null,
-      reason: !apiKey ? 'missing_key' : 'missing_uuid',
+      reason: !apiKey ? "missing_key" : "missing_uuid",
     });
   }
 
   try {
-    const headers = { 'X-Api-Key': apiKey };
+    const headers = { "X-Api-Key": apiKey };
     const started = Date.now();
     const checkRes = await fetch(
       `https://healthchecks.io/api/v3/checks/${uuid}`,
@@ -127,7 +135,7 @@ async function handleSynapseStatus(env) {
     const hcLatencyMs = Date.now() - started;
     if (!checkRes.ok) {
       return json({
-        status: 'unknown',
+        status: "unknown",
         lastPing: null,
         checkedAt,
         uptime30d: null,
@@ -148,7 +156,7 @@ async function handleSynapseStatus(env) {
     const days = buildDailyUptime(flips, start, now, check.status);
     return json({
       status: mapSynapseHcStatus(check.status),
-      name: check.name || 'Synapse',
+      name: check.name || "Synapse",
       lastPing: check.last_ping || null,
       checkedAt,
       uptime30d,
@@ -158,24 +166,24 @@ async function handleSynapseStatus(env) {
     });
   } catch {
     return json({
-      status: 'unknown',
+      status: "unknown",
       lastPing: null,
       checkedAt,
       uptime30d: null,
       days: [],
       hcLatencyMs: null,
-      reason: 'fetch_failed',
+      reason: "fetch_failed",
     });
   }
 }
 
 async function handleUptime(env) {
   if (!env.HC_API_KEY) {
-    return json({ error: 'HC_API_KEY not configured' }, 500);
+    return json({ error: "HC_API_KEY not configured" }, 500);
   }
 
   const now = Math.floor(Date.now() / 1000);
-  const headers = { 'X-Api-Key': env.HC_API_KEY };
+  const headers = { "X-Api-Key": env.HC_API_KEY };
   const results = {};
 
   await Promise.all(
@@ -185,13 +193,15 @@ async function handleUptime(env) {
           `https://healthchecks.io/api/v3/checks/${c.uuid}`,
           { headers },
         );
-        if (!checkRes.ok) throw new Error('check fetch failed: ' + checkRes.status);
+        if (!checkRes.ok)
+          throw new Error("check fetch failed: " + checkRes.status);
         const check = await checkRes.json();
         const flipsRes = await fetch(
           `https://healthchecks.io/api/v3/checks/${c.uuid}/flips/?start=${now - FLIP_LOOKBACK_SECONDS}`,
           { headers },
         );
-        if (!flipsRes.ok) throw new Error('flips fetch failed: ' + flipsRes.status);
+        if (!flipsRes.ok)
+          throw new Error("flips fetch failed: " + flipsRes.status);
         const flips = normalizeFlips(await flipsRes.json());
         const start = historyStart(now, check, flips);
 
@@ -206,7 +216,7 @@ async function handleUptime(env) {
       } catch (err) {
         results[c.key] = {
           label: c.label,
-          status: 'unknown',
+          status: "unknown",
           last_ping: null,
           uptime_30d: null,
           days: [],
@@ -220,10 +230,10 @@ async function handleUptime(env) {
 }
 
 function toUnix(value) {
-  if (typeof value === 'number' && Number.isFinite(value)) {
+  if (typeof value === "number" && Number.isFinite(value)) {
     return value > 1e12 ? Math.floor(value / 1000) : Math.floor(value);
   }
-  if (typeof value === 'string' && value) {
+  if (typeof value === "string" && value) {
     const ms = Date.parse(value);
     if (!Number.isNaN(ms)) return Math.floor(ms / 1000);
   }
@@ -246,7 +256,7 @@ function normalizeFlips(raw) {
 }
 
 function isUpStatus(status) {
-  return status === 'up' || status === 'grace';
+  return status === "up" || status === "grace";
 }
 
 function historyStart(now, check, flips) {
@@ -335,8 +345,8 @@ function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
-      'content-type': 'application/json',
-      'cache-control': 'no-store',
+      "content-type": "application/json",
+      "cache-control": "no-store",
     },
   });
 }

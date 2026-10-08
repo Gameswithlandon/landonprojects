@@ -55,12 +55,19 @@
       <p class="eyebrow">Operations</p>
       <h1>System status</h1>
       <p class="lede status-lede">
-        Live signal for the official Synapse Discord bot. Refreshes every minute.
+        Live signal for the official Synapse Discord bot. Refreshes every
+        minute.
       </p>
 
-      <div class="status-banner is-checking" id="status-banner" aria-live="polite">
+      <div
+        class="status-banner is-checking"
+        id="status-banner"
+        aria-live="polite"
+      >
         <span class="status-pill is-checking" id="banner-pill">Checking</span>
-        <p class="status-banner-copy" id="banner-copy">Loading current status…</p>
+        <p class="status-banner-copy" id="banner-copy">
+          Loading current status…
+        </p>
       </div>
 
       <article class="status-card">
@@ -69,11 +76,13 @@
             <p class="eyebrow">Service</p>
             <h2>Synapse Discord bot</h2>
             <p class="status-card-desc">
-              Slash commands, tickets, staff tools, and Hub-and-Spoke routing for
-              the hosted bot.
+              Slash commands, tickets, staff tools, and Hub-and-Spoke routing
+              for the hosted bot.
             </p>
           </div>
-          <span class="status-pill is-checking" id="service-pill">Checking</span>
+          <span class="status-pill is-checking" id="service-pill"
+            >Checking</span
+          >
         </div>
         <dl class="status-metrics">
           <div>
@@ -96,10 +105,17 @@
         <div class="status-chart" aria-label="30-day uptime graph">
           <div class="status-chart-head">
             <p class="status-chart-title">Uptime · last 30 days</p>
-            <p class="status-chart-caption" id="chart-caption">Hover a day for details</p>
+            <p class="status-chart-caption" id="chart-caption">
+              Hover for details
+            </p>
           </div>
           <div class="status-chart-plot">
-            <div class="status-bars" id="uptime-bars" role="list" aria-label="Daily uptime bars"></div>
+            <div
+              class="status-bars"
+              id="uptime-bars"
+              role="list"
+              aria-label="Daily uptime bars"
+            ></div>
             <div class="status-tip" id="chart-tip" hidden>
               <span class="status-tip-date" id="chart-tip-date"></span>
               <span class="status-tip-value" id="chart-tip-value"></span>
@@ -111,8 +127,8 @@
       <p class="status-note">
         Status comes from Healthchecks.io heartbeats the bot sends while it is
         running. Latency is the round-trip to this status API. Uptime uses
-        recorded up/down flips, so short restarts inside the grace window may not
-        count as downtime. For help, join the
+        recorded up/down flips, so short restarts inside the grace window may
+        not count as downtime. For help, join the
         <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener"
           >support server</a
         >.
@@ -226,7 +242,8 @@
       }
 
       function latencyText(ms) {
-        if (typeof ms !== "number" || !Number.isFinite(ms) || ms < 0) return "—";
+        if (typeof ms !== "number" || !Number.isFinite(ms) || ms < 0)
+          return "—";
         return Math.round(ms) + " ms";
       }
 
@@ -312,16 +329,23 @@
           bar.type = "button";
           bar.className = "status-bar";
           bar.setAttribute("role", "listitem");
-          const value = day && typeof day.uptime === "number" ? day.uptime : null;
+          const value =
+            day && typeof day.uptime === "number" ? day.uptime : null;
           bar.dataset.level = barLevel(value);
           if (value == null) {
             bar.style.setProperty("--bar-h", "4px");
-            bar.setAttribute("aria-label", dayLabel(day && day.date) + ", no data");
+            bar.setAttribute(
+              "aria-label",
+              dayLabel(day && day.date) + ", no data",
+            );
           } else {
             tracked += 1;
             const height = Math.max(10, Math.round((value / 100) * 88));
             bar.style.setProperty("--bar-h", height + "px");
-            bar.style.setProperty("--bar-delay", Math.min(index * 12, 280) + "ms");
+            bar.style.setProperty(
+              "--bar-delay",
+              Math.min(index * 12, 280) + "ms",
+            );
             bar.setAttribute(
               "aria-label",
               dayLabel(day.date) + ", " + uptimeText(value) + " uptime",
