@@ -147,40 +147,136 @@
     font-size: 0.85rem;
     color: var(--muted);
     white-space: nowrap;
+    transition: color 0.2s ease;
   }
 
   .uptime-pct[data-level="good"] { color: #3fb660; }
-  .uptime-pct[data-level="warn"] { color: var(--amber-dim); }
-  .uptime-pct[data-level="bad"] { color: #e5534b; }
+  .uptime-pct[data-level="warn"] { color: var(--muted); }
+  .uptime-pct[data-level="bad"] { color: var(--muted); }
 
   .uptime-graph {
+    position: relative;
     margin: 0.75rem 0 0;
-    padding-top: 0.75rem;
+    padding: 0.85rem 0 0.15rem;
     border-top: 1px dashed var(--border);
+  }
+
+  .uptime-graph-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin: 0 0 0.55rem;
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+
+  .uptime-graph-meta.is-active .uptime-hover {
+    color: var(--text);
+  }
+
+  .uptime-plot {
+    position: relative;
   }
 
   .uptime-bars {
     display: grid;
     grid-template-columns: repeat(30, minmax(0, 1fr));
     align-items: end;
-    gap: 2px;
-    height: 36px;
+    gap: 3px;
+    height: 52px;
   }
 
   .uptime-bar {
+    position: relative;
     display: block;
     width: 100%;
-    min-height: 3px;
-    border-radius: 1px;
-    background: rgba(133, 133, 140, 0.35);
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .uptime-bar[data-level="good"] { background: #3fb660; }
-  .uptime-bar[data-level="warn"] { background: var(--amber-dim); }
-  .uptime-bar[data-level="bad"] { background: #e5534b; }
-  .uptime-bar[data-level="empty"] {
+  .uptime-bar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--bar-h, 3px);
+    border-radius: 2px 2px 1px 1px;
+    background: rgba(133, 133, 140, 0.35);
+    transform: scaleY(0.08);
+    transform-origin: bottom center;
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      background 0.2s ease,
+      opacity 0.2s ease,
+      filter 0.2s ease;
+    transition-delay: var(--bar-delay, 0ms);
+  }
+
+  .uptime-bars.is-ready .uptime-bar::before {
+    transform: scaleY(1);
+  }
+
+  .uptime-bar[data-level="good"]::before { background: #3fb660; }
+  .uptime-bar[data-level="warn"]::before { background: #d9a441; }
+  .uptime-bar[data-level="bad"]::before { background: #e5534b; }
+  .uptime-bar[data-level="empty"]::before {
     background: rgba(133, 133, 140, 0.18);
-    height: 3px !important;
+    --bar-h: 3px;
+  }
+
+  .uptime-bars.is-dimming .uptime-bar:not(.is-active)::before {
+    opacity: 0.28;
+    filter: saturate(0.65);
+  }
+
+  .uptime-bar:hover::before,
+  .uptime-bar:focus-visible::before,
+  .uptime-bar.is-active::before {
+    opacity: 1;
+    filter: brightness(1.15);
+  }
+
+  .uptime-bar:focus-visible {
+    outline: 1px solid var(--amber);
+    outline-offset: 2px;
+  }
+
+  .uptime-tip {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    min-width: 7rem;
+    padding: 0.35rem 0.55rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg-raised);
+    color: var(--text);
+    font-size: 0.72rem;
+    line-height: 1.35;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate(-50%, -6px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  }
+
+  .uptime-tip.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -12px);
+  }
+
+  .uptime-tip strong {
+    display: block;
+    color: var(--amber);
+    font-weight: 500;
   }
 
   .project-block { border-top: 1px solid var(--border); }
@@ -191,6 +287,12 @@
   }
 
   .project-row:last-child { border-bottom: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .uptime-bar::before,
+    .uptime-tip { transition: none; }
+    .uptime-bars.is-ready .uptime-bar::before { transform: none; }
+  }
 
   .status-btn {
     position: relative;
@@ -304,7 +406,14 @@
         </div>
       </div>
       <div class="uptime-graph" aria-label="tv-home-server 30-day uptime">
-        <div class="uptime-bars" id="tv-bars"></div>
+        <div class="uptime-graph-meta" id="tv-meta">
+          <span>last 30 days</span>
+          <span class="uptime-hover" id="tv-hover">hover a day</span>
+        </div>
+        <div class="uptime-plot">
+          <div class="uptime-bars" id="tv-bars"></div>
+          <div class="uptime-tip" id="tv-tip" hidden></div>
+        </div>
       </div>
     </div>
 
@@ -326,7 +435,14 @@
         </div>
       </div>
       <div class="uptime-graph" aria-label="gaming-home-server 30-day uptime">
-        <div class="uptime-bars" id="gaming-bars"></div>
+        <div class="uptime-graph-meta" id="gaming-meta">
+          <span>last 30 days</span>
+          <span class="uptime-hover" id="gaming-hover">hover a day</span>
+        </div>
+        <div class="uptime-plot">
+          <div class="uptime-bars" id="gaming-bars"></div>
+          <div class="uptime-tip" id="gaming-tip" hidden></div>
+        </div>
       </div>
     </div>
   </div>
@@ -352,28 +468,111 @@
   function barLevel(value) {
     if (typeof value !== 'number' || Number.isNaN(value)) return 'empty';
     if (value >= 99.5) return 'good';
-    if (value >= 97) return 'warn';
+    if (value >= 80) return 'warn';
     return 'bad';
+  }
+
+  function pctLevel(value) {
+    if (typeof value !== 'number' || Number.isNaN(value)) return '';
+    return value >= 99.5 ? 'good' : 'warn';
+  }
+
+  function dayLabel(dateValue) {
+    if (!dateValue) return 'unknown day';
+    const date = new Date(dateValue + 'T12:00:00Z');
+    if (Number.isNaN(date.getTime())) return dateValue;
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      timeZone: 'UTC',
+    });
+  }
+
+  function hideTip(key) {
+    const root = document.getElementById(key + '-bars');
+    const tip = document.getElementById(key + '-tip');
+    const hover = document.getElementById(key + '-hover');
+    const meta = document.getElementById(key + '-meta');
+    if (!root || !tip) return;
+    tip.hidden = true;
+    tip.classList.remove('is-visible');
+    root.classList.remove('is-dimming');
+    root.querySelectorAll('.uptime-bar.is-active').forEach(function (bar) {
+      bar.classList.remove('is-active');
+    });
+    if (hover) hover.textContent = 'hover a day';
+    if (meta) meta.classList.remove('is-active');
+  }
+
+  function showTip(key, bar, day) {
+    const root = document.getElementById(key + '-bars');
+    const tip = document.getElementById(key + '-tip');
+    const hover = document.getElementById(key + '-hover');
+    const meta = document.getElementById(key + '-meta');
+    const plot = tip.parentElement;
+    const value = day && typeof day.uptime === 'number' ? day.uptime : null;
+    const label = dayLabel(day && day.date);
+    const detail = value == null ? 'no data' : value.toFixed(2) + '%';
+
+    tip.innerHTML = '<strong>' + label + '</strong>' + detail;
+    if (hover) hover.textContent = label + ' · ' + detail;
+    if (meta) meta.classList.add('is-active');
+    root.classList.add('is-dimming');
+    root.querySelectorAll('.uptime-bar.is-active').forEach(function (el) {
+      el.classList.remove('is-active');
+    });
+    bar.classList.add('is-active');
+
+    const barRect = bar.getBoundingClientRect();
+    const plotRect = plot.getBoundingClientRect();
+    tip.hidden = false;
+    const tipWidth = tip.offsetWidth || 110;
+    var left = barRect.left - plotRect.left + barRect.width / 2;
+    left = Math.max(tipWidth / 2 + 4, Math.min(plotRect.width - tipWidth / 2 - 4, left));
+    tip.style.left = left + 'px';
+    tip.style.top = '0px';
+    requestAnimationFrame(function () { tip.classList.add('is-visible'); });
   }
 
   function renderBars(key, days) {
     const root = document.getElementById(key + '-bars');
     if (!root) return;
+    hideTip(key);
+    root.classList.remove('is-ready');
     root.replaceChildren();
-    const list = Array.isArray(days) && days.length ? days : new Array(30).fill(null);
-    list.forEach(function (day) {
-      const bar = document.createElement('span');
+    const list = Array.isArray(days) && days.length
+      ? days
+      : Array.from({ length: 30 }, function () { return { date: null, uptime: null }; });
+
+    list.forEach(function (day, index) {
+      const bar = document.createElement('button');
+      bar.type = 'button';
       bar.className = 'uptime-bar';
       const value = day && typeof day.uptime === 'number' ? day.uptime : null;
       bar.dataset.level = barLevel(value);
       if (value == null) {
-        bar.style.height = '3px';
-        bar.title = (day && day.date ? day.date + ': ' : '') + 'no data';
+        bar.style.setProperty('--bar-h', '3px');
+        bar.setAttribute('aria-label', dayLabel(day && day.date) + ', no data');
       } else {
-        bar.style.height = Math.max(4, Math.round((value / 100) * 36)) + 'px';
-        bar.title = (day.date || 'day') + ': ' + value.toFixed(2) + '%';
+        bar.style.setProperty('--bar-h', Math.max(6, Math.round((value / 100) * 52)) + 'px');
+        bar.style.setProperty('--bar-delay', Math.min(index * 12, 280) + 'ms');
+        bar.setAttribute('aria-label', dayLabel(day.date) + ', ' + value.toFixed(2) + '% uptime');
       }
+      const activate = function () { showTip(key, bar, day || {}); };
+      bar.addEventListener('mouseenter', activate);
+      bar.addEventListener('focus', activate);
+      bar.addEventListener('mousemove', activate);
+      bar.addEventListener('click', activate);
       root.appendChild(bar);
+    });
+
+    root.onmouseleave = function () { hideTip(key); };
+    root.onfocusout = function (event) {
+      if (!root.contains(event.relatedTarget)) hideTip(key);
+    };
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { root.classList.add('is-ready'); });
     });
   }
 
@@ -390,11 +589,12 @@
 
     if (data.uptime_30d == null) {
       pct.textContent = '—';
+      pct.dataset.level = '';
       tip.textContent = label;
     } else {
       const rounded = data.uptime_30d.toFixed(2);
       pct.textContent = rounded + '% / 30d';
-      pct.dataset.level = data.uptime_30d >= 99.5 ? 'good' : data.uptime_30d >= 97 ? 'warn' : 'bad';
+      pct.dataset.level = pctLevel(data.uptime_30d);
       tip.textContent = label + ' — ' + rounded + '% over 30 days';
     }
 

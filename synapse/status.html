@@ -96,9 +96,15 @@
         <div class="status-chart" aria-label="30-day uptime graph">
           <div class="status-chart-head">
             <p class="status-chart-title">Uptime · last 30 days</p>
-            <p class="status-chart-caption" id="chart-caption">Loading history…</p>
+            <p class="status-chart-caption" id="chart-caption">Hover a day for details</p>
           </div>
-          <div class="status-bars" id="uptime-bars" role="img" aria-label="Daily uptime bars"></div>
+          <div class="status-chart-plot">
+            <div class="status-bars" id="uptime-bars" role="list" aria-label="Daily uptime bars"></div>
+            <div class="status-tip" id="chart-tip" hidden>
+              <span class="status-tip-date" id="chart-tip-date"></span>
+              <span class="status-tip-value" id="chart-tip-value"></span>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -166,6 +172,11 @@
       const metricChecked = document.getElementById("metric-checked");
       const uptimeBars = document.getElementById("uptime-bars");
       const chartCaption = document.getElementById("chart-caption");
+      const chartTip = document.getElementById("chart-tip");
+      const chartTipDate = document.getElementById("chart-tip-date");
+      const chartTipValue = document.getElementById("chart-tip-value");
+      let chartDefaultCaption = "Hover a day for details";
+      let chartDays = [];
 
       const states = {
         up: {
@@ -222,49 +233,123 @@
       function barLevel(value) {
         if (typeof value !== "number" || Number.isNaN(value)) return "empty";
         if (value >= 99.5) return "good";
-        if (value >= 97) return "warn";
+        if (value >= 80) return "warn";
         return "bad";
       }
 
+      function dayLabel(dateValue) {
+        if (!dateValue) return "Unknown day";
+        const date = new Date(dateValue + "T12:00:00Z");
+        if (Number.isNaN(date.getTime())) return dateValue;
+        return date.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+          timeZone: "UTC",
+        });
+      }
+
+      function hideChartTip() {
+        chartTip.hidden = true;
+        chartTip.classList.remove("is-visible");
+        uptimeBars.classList.remove("is-dimming");
+        uptimeBars
+          .querySelectorAll(".status-bar.is-active")
+          .forEach((bar) => bar.classList.remove("is-active"));
+        chartCaption.textContent = chartDefaultCaption;
+        chartCaption.classList.remove("is-active");
+      }
+
+      function showChartTip(bar, day) {
+        const value = day && typeof day.uptime === "number" ? day.uptime : null;
+        const label = dayLabel(day && day.date);
+        const detail = value == null ? "No data" : uptimeText(value);
+        chartTipDate.textContent = label;
+        chartTipValue.textContent = detail;
+        chartCaption.textContent = label + " · " + detail;
+        chartCaption.classList.add("is-active");
+        uptimeBars.classList.add("is-dimming");
+        uptimeBars
+          .querySelectorAll(".status-bar.is-active")
+          .forEach((el) => el.classList.remove("is-active"));
+        bar.classList.add("is-active");
+
+        const plot = chartTip.parentElement;
+        const barRect = bar.getBoundingClientRect();
+        const plotRect = plot.getBoundingClientRect();
+        chartTip.hidden = false;
+        const tipWidth = chartTip.offsetWidth || 120;
+        let left = barRect.left - plotRect.left + barRect.width / 2;
+        left = Math.max(
+          tipWidth / 2 + 4,
+          Math.min(plotRect.width - tipWidth / 2 - 4, left),
+        );
+        chartTip.style.left = left + "px";
+        chartTip.style.top = "0px";
+        requestAnimationFrame(() => chartTip.classList.add("is-visible"));
+      }
+
+      function bindBar(bar, day) {
+        const activate = () => showChartTip(bar, day);
+        bar.addEventListener("mouseenter", activate);
+        bar.addEventListener("focus", activate);
+        bar.addEventListener("mousemove", activate);
+        bar.addEventListener("click", activate);
+      }
+
       function renderBars(days) {
+        hideChartTip();
+        uptimeBars.classList.remove("is-ready");
         uptimeBars.replaceChildren();
-        const list = Array.isArray(days) ? days : [];
-        if (!list.length) {
-          for (let i = 0; i < 30; i += 1) {
-            const bar = document.createElement("span");
-            bar.className = "status-bar";
-            bar.dataset.level = "empty";
-            bar.style.height = "4px";
-            uptimeBars.appendChild(bar);
-          }
-          chartCaption.textContent = "No history yet";
-          return;
-        }
+        chartDays = Array.isArray(days) && days.length ? days : [];
+        const list = chartDays.length
+          ? chartDays
+          : Array.from({ length: 30 }, () => ({ date: null, uptime: null }));
 
         let tracked = 0;
-        list.forEach((day) => {
-          const bar = document.createElement("span");
+        list.forEach((day, index) => {
+          const bar = document.createElement("button");
+          bar.type = "button";
           bar.className = "status-bar";
+          bar.setAttribute("role", "listitem");
           const value = day && typeof day.uptime === "number" ? day.uptime : null;
-          const level = barLevel(value);
-          bar.dataset.level = level;
+          bar.dataset.level = barLevel(value);
           if (value == null) {
-            bar.style.height = "4px";
-            bar.title = (day && day.date ? day.date + ": " : "") + "no data";
+            bar.style.setProperty("--bar-h", "4px");
+            bar.setAttribute("aria-label", dayLabel(day && day.date) + ", no data");
           } else {
             tracked += 1;
-            const height = Math.max(8, Math.round((value / 100) * 72));
-            bar.style.height = height + "px";
-            bar.title =
-              (day.date || "day") + ": " + value.toFixed(value >= 99.95 ? 2 : 1) + "%";
+            const height = Math.max(10, Math.round((value / 100) * 88));
+            bar.style.setProperty("--bar-h", height + "px");
+            bar.style.setProperty("--bar-delay", Math.min(index * 12, 280) + "ms");
+            bar.setAttribute(
+              "aria-label",
+              dayLabel(day.date) + ", " + uptimeText(value) + " uptime",
+            );
           }
+          bindBar(bar, day || {});
           uptimeBars.appendChild(bar);
         });
-        chartCaption.textContent =
+
+        chartDefaultCaption =
           tracked > 0
-            ? tracked + " day" + (tracked === 1 ? "" : "s") + " with heartbeat history"
+            ? "Hover a day for details · " +
+              tracked +
+              " day" +
+              (tracked === 1 ? "" : "s") +
+              " tracked"
             : "No history yet";
+        chartCaption.textContent = chartDefaultCaption;
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => uptimeBars.classList.add("is-ready"));
+        });
       }
+
+      uptimeBars.addEventListener("mouseleave", hideChartTip);
+      uptimeBars.addEventListener("focusout", (event) => {
+        if (!uptimeBars.contains(event.relatedTarget)) hideChartTip();
+      });
 
       function apply(data, latencyMs) {
         const state = states[data.status] || states.unknown;
