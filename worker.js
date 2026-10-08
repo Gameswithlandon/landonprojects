@@ -110,42 +110,50 @@ async function handleSynapseStatus(env) {
       lastPing: null,
       checkedAt,
       uptime30d: null,
+      days: [],
+      hcLatencyMs: null,
       reason: !apiKey ? 'missing_key' : 'missing_uuid',
     });
   }
 
   try {
-    const now = Math.floor(Date.now() / 1000);
-    const start = now - WINDOW_SECONDS;
     const headers = { 'X-Api-Key': apiKey };
-    const [res, flipsRes] = await Promise.all([
-      fetch(`https://healthchecks.io/api/v3/checks/${uuid}`, { headers }),
-      fetch(
-        `https://healthchecks.io/api/v3/checks/${uuid}/flips/?start=${start}`,
-        { headers },
-      ),
-    ]);
-    if (!res.ok) {
+    const started = Date.now();
+    const checkRes = await fetch(
+      `https://healthchecks.io/api/v3/checks/${uuid}`,
+      { headers },
+    );
+    const hcLatencyMs = Date.now() - started;
+    if (!checkRes.ok) {
       return json({
         status: 'unknown',
         lastPing: null,
         checkedAt,
         uptime30d: null,
-        reason: `hc_${res.status}`,
+        days: [],
+        hcLatencyMs,
+        reason: `hc_${checkRes.status}`,
       });
     }
-    const check = await res.json();
-    let uptime30d = null;
-    if (flipsRes.ok) {
-      const flips = await flipsRes.json();
-      uptime30d = computeUptime(flips, start, now, check.status);
-    }
+    const check = await checkRes.json();
+    const now = Math.floor(Date.now() / 1000);
+    const start = historyStart(now, check);
+    const flipsRes = await fetch(
+      `https://healthchecks.io/api/v3/checks/${uuid}/flips/?start=${start}`,
+      { headers },
+    );
+    const flips = flipsRes.ok ? normalizeFlips(await flipsRes.json()) : [];
+    const uptime30d = computeUptime(flips, start, now, check.status);
+    const days = buildDailyUptime(flips, start, now, check.status);
     return json({
       status: mapSynapseHcStatus(check.status),
       name: check.name || 'Synapse',
       lastPing: check.last_ping || null,
       checkedAt,
       uptime30d,
+      days,
+      hcLatencyMs,
+      trackedSince: new Date(start * 1000).toISOString(),
     });
   } catch {
     return json({
@@ -153,6 +161,8 @@ async function handleSynapseStatus(env) {
       lastPing: null,
       checkedAt,
       uptime30d: null,
+      days: [],
+      hcLatencyMs: null,
       reason: 'fetch_failed',
     });
   }
@@ -164,67 +174,148 @@ async function handleUptime(env) {
   }
 
   const now = Math.floor(Date.now() / 1000);
-  const start = now - WINDOW_SECONDS;
   const headers = { 'X-Api-Key': env.HC_API_KEY };
-
   const results = {};
 
   await Promise.all(
     CHECKS.map(async (c) => {
       try {
-        const [checkRes, flipsRes] = await Promise.all([
-          fetch(`https://healthchecks.io/api/v3/checks/${c.uuid}`, { headers }),
-          fetch(`https://healthchecks.io/api/v3/checks/${c.uuid}/flips/?start=${start}`, { headers }),
-        ]);
-
+        const checkRes = await fetch(
+          `https://healthchecks.io/api/v3/checks/${c.uuid}`,
+          { headers },
+        );
         if (!checkRes.ok) throw new Error('check fetch failed: ' + checkRes.status);
-        if (!flipsRes.ok) throw new Error('flips fetch failed: ' + flipsRes.status);
-
         const check = await checkRes.json();
-        const flips = await flipsRes.json();
+        const start = historyStart(now, check);
+        const flipsRes = await fetch(
+          `https://healthchecks.io/api/v3/checks/${c.uuid}/flips/?start=${start}`,
+          { headers },
+        );
+        if (!flipsRes.ok) throw new Error('flips fetch failed: ' + flipsRes.status);
+        const flips = normalizeFlips(await flipsRes.json());
 
         results[c.key] = {
           label: c.label,
           status: check.status,
           last_ping: check.last_ping || null,
           uptime_30d: computeUptime(flips, start, now, check.status),
+          days: buildDailyUptime(flips, start, now, check.status),
+          tracked_since: new Date(start * 1000).toISOString(),
         };
       } catch (err) {
-        results[c.key] = { label: c.label, status: 'unknown', last_ping: null, uptime_30d: null };
+        results[c.key] = {
+          label: c.label,
+          status: 'unknown',
+          last_ping: null,
+          uptime_30d: null,
+          days: [],
+          tracked_since: null,
+        };
       }
-    })
+    }),
   );
 
   return json(results);
 }
 
-// flips: array of { timestamp, up } status transitions within [start, end].
-// Walks them in order to total up how many seconds were spent "up" in the window.
+function toUnix(value) {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value > 1e12 ? Math.floor(value / 1000) : Math.floor(value);
+  }
+  if (typeof value === 'string' && value) {
+    const ms = Date.parse(value);
+    if (!Number.isNaN(ms)) return Math.floor(ms / 1000);
+  }
+  return null;
+}
+
+function normalizeFlips(raw) {
+  const list = Array.isArray(raw)
+    ? raw
+    : Array.isArray(raw?.flips)
+      ? raw.flips
+      : [];
+  return list
+    .map((flip) => ({
+      t: toUnix(flip.timestamp),
+      up: flip.up === 1 || flip.up === true ? 1 : 0,
+    }))
+    .filter((flip) => flip.t != null)
+    .sort((a, b) => a.t - b.t);
+}
+
+function isUpStatus(status) {
+  return status === 'up' || status === 'grace';
+}
+
+function historyStart(now, check) {
+  const floor = now - WINDOW_SECONDS;
+  const created = toUnix(check?.created);
+  if (created == null) return floor;
+  return Math.max(floor, created);
+}
+
+function stateBefore(flips, start, currentStatus) {
+  let state = null;
+  for (const flip of flips) {
+    if (flip.t <= start) state = flip.up;
+    else break;
+  }
+  if (state != null) return state;
+  if (flips.length > 0 && flips[0].t > start) {
+    return flips[0].up ? 0 : 1;
+  }
+  return isUpStatus(currentStatus) ? 1 : 0;
+}
+
 function computeUptime(flips, start, end, currentStatus) {
   const total = end - start;
   if (total <= 0) return 100;
 
-  if (!Array.isArray(flips) || flips.length === 0) {
-    // No transitions recorded in the window at all — infer from current status.
-    return currentStatus === 'down' ? 0 : 100;
-  }
-
-  const sorted = flips.slice().sort((a, b) => a.timestamp - b.timestamp);
-
-  // State just before the first flip in the window is the opposite of what it flipped to.
-  let state = sorted[0].up ? 0 : 1;
+  let state = stateBefore(flips, start, currentStatus);
   let cursor = start;
   let upSeconds = 0;
 
-  for (const flip of sorted) {
-    const t = Math.min(Math.max(flip.timestamp, start), end);
-    if (state === 1) upSeconds += t - cursor;
-    cursor = t;
-    state = flip.up ? 1 : 0;
+  for (const flip of flips) {
+    if (flip.t <= start) continue;
+    if (flip.t >= end) break;
+    if (state === 1) upSeconds += flip.t - cursor;
+    cursor = flip.t;
+    state = flip.up;
   }
   if (state === 1) upSeconds += end - cursor;
 
   return Math.max(0, Math.min(100, (upSeconds / total) * 100));
+}
+
+function buildDailyUptime(flips, start, end, currentStatus) {
+  const days = [];
+  const endDay = new Date(end * 1000);
+  endDay.setUTCHours(0, 0, 0, 0);
+
+  for (let i = 29; i >= 0; i -= 1) {
+    const dayStart = new Date(endDay);
+    dayStart.setUTCDate(endDay.getUTCDate() - i);
+    const dayEnd = new Date(dayStart);
+    dayEnd.setUTCDate(dayStart.getUTCDate() + 1);
+
+    let segStart = Math.floor(dayStart.getTime() / 1000);
+    let segEnd = Math.floor(dayEnd.getTime() / 1000);
+    if (segEnd <= start || segStart >= end) {
+      days.push({
+        date: dayStart.toISOString().slice(0, 10),
+        uptime: null,
+      });
+      continue;
+    }
+    segStart = Math.max(segStart, start);
+    segEnd = Math.min(segEnd, end);
+    days.push({
+      date: dayStart.toISOString().slice(0, 10),
+      uptime: computeUptime(flips, segStart, segEnd, currentStatus),
+    });
+  }
+  return days;
 }
 
 function json(data, status = 200) {

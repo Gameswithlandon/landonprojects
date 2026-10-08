@@ -77,7 +77,11 @@
         </div>
         <dl class="status-metrics">
           <div>
-            <dt>Last ping</dt>
+            <dt>Latency</dt>
+            <dd id="metric-latency">—</dd>
+          </div>
+          <div>
+            <dt>Last heartbeat</dt>
             <dd id="metric-ping">—</dd>
           </div>
           <div>
@@ -89,11 +93,20 @@
             <dd id="metric-checked">—</dd>
           </div>
         </dl>
+        <div class="status-chart" aria-label="30-day uptime graph">
+          <div class="status-chart-head">
+            <p class="status-chart-title">Uptime · last 30 days</p>
+            <p class="status-chart-caption" id="chart-caption">Loading history…</p>
+          </div>
+          <div class="status-bars" id="uptime-bars" role="img" aria-label="Daily uptime bars"></div>
+        </div>
       </article>
 
       <p class="status-note">
         Status comes from Healthchecks.io heartbeats the bot sends while it is
-        running. Brief restarts can show as short dips. For help, join the
+        running. Latency is the round-trip to this status API. Uptime uses
+        recorded up/down flips, so short restarts inside the grace window may not
+        count as downtime. For help, join the
         <a href="https://discord.gg/VJcacfEuyE" target="_blank" rel="noopener"
           >support server</a
         >.
@@ -147,9 +160,12 @@
       const bannerPill = document.getElementById("banner-pill");
       const bannerCopy = document.getElementById("banner-copy");
       const servicePill = document.getElementById("service-pill");
+      const metricLatency = document.getElementById("metric-latency");
       const metricPing = document.getElementById("metric-ping");
       const metricUptime = document.getElementById("metric-uptime");
       const metricChecked = document.getElementById("metric-checked");
+      const uptimeBars = document.getElementById("uptime-bars");
+      const chartCaption = document.getElementById("chart-caption");
 
       const states = {
         up: {
@@ -198,7 +214,59 @@
         return value.toFixed(value >= 99.95 ? 2 : 1) + "%";
       }
 
-      function apply(data) {
+      function latencyText(ms) {
+        if (typeof ms !== "number" || !Number.isFinite(ms) || ms < 0) return "—";
+        return Math.round(ms) + " ms";
+      }
+
+      function barLevel(value) {
+        if (typeof value !== "number" || Number.isNaN(value)) return "empty";
+        if (value >= 99.5) return "good";
+        if (value >= 97) return "warn";
+        return "bad";
+      }
+
+      function renderBars(days) {
+        uptimeBars.replaceChildren();
+        const list = Array.isArray(days) ? days : [];
+        if (!list.length) {
+          for (let i = 0; i < 30; i += 1) {
+            const bar = document.createElement("span");
+            bar.className = "status-bar";
+            bar.dataset.level = "empty";
+            bar.style.height = "4px";
+            uptimeBars.appendChild(bar);
+          }
+          chartCaption.textContent = "No history yet";
+          return;
+        }
+
+        let tracked = 0;
+        list.forEach((day) => {
+          const bar = document.createElement("span");
+          bar.className = "status-bar";
+          const value = day && typeof day.uptime === "number" ? day.uptime : null;
+          const level = barLevel(value);
+          bar.dataset.level = level;
+          if (value == null) {
+            bar.style.height = "4px";
+            bar.title = (day && day.date ? day.date + ": " : "") + "no data";
+          } else {
+            tracked += 1;
+            const height = Math.max(8, Math.round((value / 100) * 72));
+            bar.style.height = height + "px";
+            bar.title =
+              (day.date || "day") + ": " + value.toFixed(value >= 99.95 ? 2 : 1) + "%";
+          }
+          uptimeBars.appendChild(bar);
+        });
+        chartCaption.textContent =
+          tracked > 0
+            ? tracked + " day" + (tracked === 1 ? "" : "s") + " with heartbeat history"
+            : "No history yet";
+      }
+
+      function apply(data, latencyMs) {
         const state = states[data.status] || states.unknown;
         banner.className = "status-banner " + state.banner;
         bannerPill.className = "status-pill " + state.className;
@@ -206,25 +274,34 @@
         bannerCopy.textContent = state.copy;
         servicePill.className = "status-pill " + state.className;
         servicePill.textContent = state.label;
+        metricLatency.textContent = latencyText(latencyMs);
         metricPing.textContent = stamp(data.lastPing);
         metricUptime.textContent = uptimeText(data.uptime30d);
         metricChecked.textContent = stamp(data.checkedAt);
+        renderBars(data.days);
       }
 
       async function refresh() {
+        const started = performance.now();
         try {
           const response = await fetch("/api/synapse-status", {
             headers: { Accept: "application/json" },
+            cache: "no-store",
           });
+          const latencyMs = performance.now() - started;
           if (!response.ok) throw new Error("bad status");
-          apply(await response.json());
+          apply(await response.json(), latencyMs);
         } catch (error) {
-          apply({
-            status: "unknown",
-            lastPing: null,
-            checkedAt: new Date().toISOString(),
-            uptime30d: null,
-          });
+          apply(
+            {
+              status: "unknown",
+              lastPing: null,
+              checkedAt: new Date().toISOString(),
+              uptime30d: null,
+              days: [],
+            },
+            performance.now() - started,
+          );
         }
       }
 

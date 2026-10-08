@@ -153,6 +153,45 @@
   .uptime-pct[data-level="warn"] { color: var(--amber-dim); }
   .uptime-pct[data-level="bad"] { color: #e5534b; }
 
+  .uptime-graph {
+    margin: 0.75rem 0 0;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--border);
+  }
+
+  .uptime-bars {
+    display: grid;
+    grid-template-columns: repeat(30, minmax(0, 1fr));
+    align-items: end;
+    gap: 2px;
+    height: 36px;
+  }
+
+  .uptime-bar {
+    display: block;
+    width: 100%;
+    min-height: 3px;
+    border-radius: 1px;
+    background: rgba(133, 133, 140, 0.35);
+  }
+
+  .uptime-bar[data-level="good"] { background: #3fb660; }
+  .uptime-bar[data-level="warn"] { background: var(--amber-dim); }
+  .uptime-bar[data-level="bad"] { background: #e5534b; }
+  .uptime-bar[data-level="empty"] {
+    background: rgba(133, 133, 140, 0.18);
+    height: 3px !important;
+  }
+
+  .project-block { border-top: 1px solid var(--border); }
+  .project-block:last-child { border-bottom: 1px solid var(--border); }
+
+  .project-row {
+    border-top: none;
+  }
+
+  .project-row:last-child { border-bottom: none; }
+
   .status-btn {
     position: relative;
     display: inline-flex;
@@ -247,37 +286,47 @@
   <div>
     <p class="section-heading">homelabs/</p>
 
-    <div class="project-row">
-      <div>
-        <div class="project-name">tv-home-server</div>
-        <div class="project-desc" id="tv-detail">Checking…</div>
+    <div class="project-block">
+      <div class="project-row">
+        <div>
+          <div class="project-name">tv-home-server</div>
+          <div class="project-desc" id="tv-detail">Checking…</div>
+        </div>
+        <div class="row-right">
+          <span class="uptime-pct" id="tv-pct">—</span>
+          <button class="status-btn" type="button" data-status="unknown" data-key="tv" aria-label="Status: checking">
+            <svg class="status-icon" viewBox="0 0 20 20" aria-hidden="true">
+              <circle cx="10" cy="10" r="9"></circle>
+              <path d="M6 10.5l2.5 2.5L14 7.5"></path>
+            </svg>
+            <span class="status-tip" role="tooltip">Checking…</span>
+          </button>
+        </div>
       </div>
-      <div class="row-right">
-        <span class="uptime-pct" id="tv-pct">—</span>
-        <button class="status-btn" type="button" data-status="unknown" data-key="tv" aria-label="Status: checking">
-          <svg class="status-icon" viewBox="0 0 20 20" aria-hidden="true">
-            <circle cx="10" cy="10" r="9"></circle>
-            <path d="M6 10.5l2.5 2.5L14 7.5"></path>
-          </svg>
-          <span class="status-tip" role="tooltip">Checking…</span>
-        </button>
+      <div class="uptime-graph" aria-label="tv-home-server 30-day uptime">
+        <div class="uptime-bars" id="tv-bars"></div>
       </div>
     </div>
 
-    <div class="project-row">
-      <div>
-        <div class="project-name">gaming-home-server</div>
-        <div class="project-desc" id="gaming-detail">Checking…</div>
+    <div class="project-block">
+      <div class="project-row">
+        <div>
+          <div class="project-name">gaming-home-server</div>
+          <div class="project-desc" id="gaming-detail">Checking…</div>
+        </div>
+        <div class="row-right">
+          <span class="uptime-pct" id="gaming-pct">—</span>
+          <button class="status-btn" type="button" data-status="unknown" data-key="gaming" aria-label="Status: checking">
+            <svg class="status-icon" viewBox="0 0 20 20" aria-hidden="true">
+              <circle cx="10" cy="10" r="9"></circle>
+              <path d="M6 10.5l2.5 2.5L14 7.5"></path>
+            </svg>
+            <span class="status-tip" role="tooltip">Checking…</span>
+          </button>
+        </div>
       </div>
-      <div class="row-right">
-        <span class="uptime-pct" id="gaming-pct">—</span>
-        <button class="status-btn" type="button" data-status="unknown" data-key="gaming" aria-label="Status: checking">
-          <svg class="status-icon" viewBox="0 0 20 20" aria-hidden="true">
-            <circle cx="10" cy="10" r="9"></circle>
-            <path d="M6 10.5l2.5 2.5L14 7.5"></path>
-          </svg>
-          <span class="status-tip" role="tooltip">Checking…</span>
-        </button>
+      <div class="uptime-graph" aria-label="gaming-home-server 30-day uptime">
+        <div class="uptime-bars" id="gaming-bars"></div>
       </div>
     </div>
   </div>
@@ -298,6 +347,34 @@
     if (diff < 3600) return 'last ping ' + Math.round(diff / 60) + 'm ago';
     if (diff < 86400) return 'last ping ' + Math.round(diff / 3600) + 'h ago';
     return 'last ping ' + Math.round(diff / 86400) + 'd ago';
+  }
+
+  function barLevel(value) {
+    if (typeof value !== 'number' || Number.isNaN(value)) return 'empty';
+    if (value >= 99.5) return 'good';
+    if (value >= 97) return 'warn';
+    return 'bad';
+  }
+
+  function renderBars(key, days) {
+    const root = document.getElementById(key + '-bars');
+    if (!root) return;
+    root.replaceChildren();
+    const list = Array.isArray(days) && days.length ? days : new Array(30).fill(null);
+    list.forEach(function (day) {
+      const bar = document.createElement('span');
+      bar.className = 'uptime-bar';
+      const value = day && typeof day.uptime === 'number' ? day.uptime : null;
+      bar.dataset.level = barLevel(value);
+      if (value == null) {
+        bar.style.height = '3px';
+        bar.title = (day && day.date ? day.date + ': ' : '') + 'no data';
+      } else {
+        bar.style.height = Math.max(4, Math.round((value / 100) * 36)) + 'px';
+        bar.title = (day.date || 'day') + ': ' + value.toFixed(2) + '%';
+      }
+      root.appendChild(bar);
+    });
   }
 
   function applyRow(key, data) {
@@ -323,6 +400,7 @@
 
     btn.setAttribute('aria-label', tip.textContent);
     detail.textContent = timeAgo(data.last_ping);
+    renderBars(key, data.days);
   }
 
   fetch('/api/uptime', { cache: 'no-store' })
@@ -334,7 +412,7 @@
     })
     .catch(function () {
       ['tv', 'gaming'].forEach(function (key) {
-        applyRow(key, { status: 'unknown', uptime_30d: null, last_ping: null });
+        applyRow(key, { status: 'unknown', uptime_30d: null, last_ping: null, days: [] });
       });
     });
 
