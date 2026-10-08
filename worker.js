@@ -4,6 +4,7 @@ const CHECKS = [
 ];
 
 const WINDOW_SECONDS = 30 * 24 * 3600; // 30 days
+const FLIP_LOOKBACK_SECONDS = 90 * 24 * 3600;
 
 const CSP = [
   "default-src 'self'",
@@ -137,12 +138,12 @@ async function handleSynapseStatus(env) {
     }
     const check = await checkRes.json();
     const now = Math.floor(Date.now() / 1000);
-    const start = historyStart(now, check);
     const flipsRes = await fetch(
-      `https://healthchecks.io/api/v3/checks/${uuid}/flips/?start=${start}`,
+      `https://healthchecks.io/api/v3/checks/${uuid}/flips/?start=${now - FLIP_LOOKBACK_SECONDS}`,
       { headers },
     );
     const flips = flipsRes.ok ? normalizeFlips(await flipsRes.json()) : [];
+    const start = historyStart(now, check, flips);
     const uptime30d = computeUptime(flips, start, now, check.status);
     const days = buildDailyUptime(flips, start, now, check.status);
     return json({
@@ -186,13 +187,13 @@ async function handleUptime(env) {
         );
         if (!checkRes.ok) throw new Error('check fetch failed: ' + checkRes.status);
         const check = await checkRes.json();
-        const start = historyStart(now, check);
         const flipsRes = await fetch(
-          `https://healthchecks.io/api/v3/checks/${c.uuid}/flips/?start=${start}`,
+          `https://healthchecks.io/api/v3/checks/${c.uuid}/flips/?start=${now - FLIP_LOOKBACK_SECONDS}`,
           { headers },
         );
         if (!flipsRes.ok) throw new Error('flips fetch failed: ' + flipsRes.status);
         const flips = normalizeFlips(await flipsRes.json());
+        const start = historyStart(now, check, flips);
 
         results[c.key] = {
           label: c.label,
@@ -248,11 +249,23 @@ function isUpStatus(status) {
   return status === 'up' || status === 'grace';
 }
 
-function historyStart(now, check) {
+function historyStart(now, check, flips) {
   const floor = now - WINDOW_SECONDS;
   const created = toUnix(check?.created);
-  if (created == null) return floor;
-  return Math.max(floor, created);
+  let start = created != null ? Math.max(floor, created) : floor;
+
+  const prior = flips.filter((flip) => flip.t <= floor);
+  if (prior.length === 0) {
+    const firstUp = flips.find((flip) => flip.t > floor && flip.up === 1);
+    if (firstUp) {
+      const downBeforeUp = flips.some(
+        (flip) => flip.t < firstUp.t && flip.up === 0,
+      );
+      if (!downBeforeUp) start = Math.max(start, firstUp.t);
+    }
+  }
+
+  return start;
 }
 
 function stateBefore(flips, start, currentStatus) {
