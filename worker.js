@@ -31,6 +31,9 @@ export default {
     const url = new URL(request.url);
 
     if (url.hostname === "synapse.landonprojects.com") {
+      if (isSynapseApp(url.pathname)) {
+        return proxySynapseApp(request, env);
+      }
       return withSecurityHeaders(await synapseResponse(request, env, url));
     }
 
@@ -60,6 +63,31 @@ const SYNAPSE_PAGES = {
   "/terms.pdf": "/synapse/terms.pdf",
   "/privacy.pdf": "/synapse/privacy.pdf",
 };
+
+function isSynapseApp(pathname) {
+  return (
+    pathname === "/dashboard" ||
+    pathname.startsWith("/dashboard/") ||
+    pathname.startsWith("/t/") ||
+    pathname.startsWith("/auth/") ||
+    pathname === "/api/me" ||
+    pathname.startsWith("/api/me/") ||
+    pathname === "/api/hubs" ||
+    pathname.startsWith("/api/hubs/") ||
+    pathname === "/api/t" ||
+    pathname.startsWith("/api/t/")
+  );
+}
+
+async function proxySynapseApp(request, env) {
+  if (!env.SYNAPSE_WEB) {
+    return new Response("Dashboard is not configured.", {
+      status: 503,
+      headers: { "content-type": "text/plain; charset=utf-8" },
+    });
+  }
+  return env.SYNAPSE_WEB.fetch(request);
+}
 
 async function synapseResponse(request, env, url) {
   if (url.pathname === "/api/synapse-status") {

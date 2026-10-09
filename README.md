@@ -42,7 +42,16 @@ Requires secrets in the Cloudflare dashboard under
 | `HC_API_KEY` | A **read-only** Healthchecks.io API key (shared by both routes) |
 | `SYNAPSE_HC_UUID` | UUID of the Synapse bot Healthchecks.io check (`HC_SYNAPSE_UUID` also accepted) |
 
+## Dashboard routes
+
+`synapse.landonprojects.com` still serves this site for `/`, `/terms`, `/privacy`, `/status`, and `/api/synapse-status`.
+
+`/dashboard`, `/t/*`, `/auth/*`, and the dashboard JSON routes are forwarded to the `synapse-web` Worker (service binding `SYNAPSE_WEB`). That Worker lives in the Synapse repo at `web/`. Deploy `synapse-web` before this site, or this Worker's deploy fails because the service binding has nothing to attach to. Secrets and the Discord redirect URI are documented in that `web/README.md`.
+
+`synapse-web` also has its own Cloudflare routes for those paths. Either the route or this forward can serve them.
+
 ## Deploy
 
 Pushes to `main` auto-deploy via Cloudflare's Git integration
 (`npx wrangler deploy`, configured in the Cloudflare dashboard).
+Deploy the Synapse `synapse-web` Worker first.
